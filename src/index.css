@@ -21,4 +21,12 @@
         font-family: Lalezar, sans-serif;
     }
 
+    body {
+        display: flex;
+    }
+
+    .sidebar-active-item {
+        background-color: #391588;
+    }
+
 }

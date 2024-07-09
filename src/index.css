@@ -23,10 +23,15 @@
 
     body {
         display: flex;
+        background-color: rgba(25, 118, 210, 0.05);
     }
 
     .sidebar-active-item {
         background-color: #391588;
+    }
+
+    .search-box-shadow {
+        box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
     }
 
 }

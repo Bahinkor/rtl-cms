@@ -1,6 +1,6 @@
 import React from 'react';
 import {useRoutes} from "react-router-dom";
-import {routes} from "./routes/routes";
+import routes from "./routes/routes";
 import SideBar from "./Components/SideBar/SideBar";
 import Header from "./Components/Header/Header";
 

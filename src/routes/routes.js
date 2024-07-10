@@ -5,7 +5,7 @@ import Users from "../Components/Users/Users";
 import Orders from "../Components/Orders/Orders";
 import Offs from "../Components/Offs/Offs";
 
-export const routes = [
+const routes = [
     {
         path: "/",
         element: <Home/>
@@ -31,3 +31,5 @@ export const routes = [
         element: <Offs/>
     },
 ];
+
+export default routes;

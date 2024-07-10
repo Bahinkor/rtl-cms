@@ -1,10 +1,11 @@
 import React from 'react';
+import ErrorBox from "../ErrorBox/ErrorBox";
 
 export default function Users() {
     //JSX
     return (
         <div>
-            users
+            <ErrorBox message="هیچ کاربری یافت نشد."/>
         </div>
     );
 }

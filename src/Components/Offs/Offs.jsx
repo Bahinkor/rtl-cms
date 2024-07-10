@@ -1,10 +1,11 @@
 import React from 'react';
+import ErrorBox from "../ErrorBox/ErrorBox";
 
 export default function Offs() {
     //JSX
     return (
         <div>
-            offs
+            <ErrorBox message="هیچ تخفیفی یافت نشد."/>
         </div>
     );
 }

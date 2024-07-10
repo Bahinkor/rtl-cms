@@ -1,10 +1,11 @@
 import React from 'react';
+import ErrorBox from "../ErrorBox/ErrorBox";
 
 export default function Orders() {
     //JSX
     return (
         <div>
-            orders
+            <ErrorBox message="هیچ سفارشی یافت نشد."/>
         </div>
     );
 }

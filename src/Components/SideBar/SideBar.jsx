@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 import {AiOutlineHome} from "react-icons/ai";
 import {MdProductionQuantityLimits} from "react-icons/md";
 import {BiCommentDetail} from "react-icons/bi";
@@ -15,40 +16,40 @@ export default function SideBar() {
             <ul className="mt-5 [&>li]:relative [&>li]:p-[15px] [&>li>a]:flex [&>li>a]:items-center [&>li>a]:justify-start [&>li>a]:w-full [&>li>a]:text-[var(--white)] [&>li>a]:text-[1.3rem]">
                 {/* sidebar-active-item is custom class (active item) */}
                 <li className="mb-5 hover:sidebar-active-item">
-                    <a href="#">
+                    <Link to="/">
                         <AiOutlineHome className="ml-[8px]"/>
                         صفحه اصلی
-                    </a>
+                    </Link>
                 </li>
                 <li className="sidebar-active-item hover:sidebar-active-item hover:sidebar-active-item">
-                    <a href="#">
+                    <Link to="/products">
                         <MdProductionQuantityLimits className="ml-[8px]"/>
                         محصولات
-                    </a>
+                    </Link>
                 </li>
                 <li className="hover:sidebar-active-item">
-                    <a href="#">
+                    <Link to="/comments">
                         <BiCommentDetail className="ml-[8px]"/>
                         کامنت ها
-                    </a>
+                    </Link>
                 </li>
                 <li className="hover:sidebar-active-item">
-                    <a href="#">
+                    <Link to="/users">
                         <FiUsers className="ml-[8px]"/>
                         کاربران
-                    </a>
+                    </Link>
                 </li>
                 <li className="hover:sidebar-active-item">
-                    <a href="#">
+                    <Link to="/orders">
                         <BsBagCheck className="ml-[8px]"/>
                         سفارشات
-                    </a>
+                    </Link>
                 </li>
                 <li className="hover:sidebar-active-item">
-                    <a href="#">
+                    <Link to="/offs">
                         <BsCurrencyDollar className="ml-[8px]"/>
                         تخفیف ها
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </div>

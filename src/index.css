@@ -22,8 +22,11 @@
     }
 
     body {
-        display: flex;
         background-color: rgba(25, 118, 210, 0.05);
+    }
+
+    .app {
+        display: flex;
     }
 
     .sidebar-active-item {

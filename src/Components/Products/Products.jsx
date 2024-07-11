@@ -6,8 +6,8 @@ export default function Products() {
     //JSX
     return (
         <div>
-            <ErrorBox message="هیچ محصولی یافت نشد."/>
             <AddNewProduct/>
+            <ErrorBox message="هیچ محصولی یافت نشد."/>
         </div>
     );
 }

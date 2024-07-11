@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorBox from "../ErrorBox/ErrorBox";
+import ErrorBox from "../../Components/ErrorBox/ErrorBox";
 
 export default function Orders() {
     //JSX

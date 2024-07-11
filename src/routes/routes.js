@@ -1,9 +1,9 @@
-import Home from "../Components/Home/Home";
-import Products from "../Components/Products/Products";
-import Comments from "../Components/Comments/Comments";
-import Users from "../Components/Users/Users";
-import Orders from "../Components/Orders/Orders";
-import Offs from "../Components/Offs/Offs";
+import Home from "../pages/Home/Home";
+import Products from "../pages/Products/Products";
+import Comments from "../pages/Comments/Comments";
+import Users from "../pages/Users/Users";
+import Orders from "../pages/Orders/Orders";
+import Offs from "../pages/Offs/Offs";
 
 const routes = [
     {

@@ -1,35 +1,45 @@
 import React, {useState} from 'react';
+import {FaDollarSign, FaImage, FaFire, FaSellcast} from "react-icons/fa";
+import {MdOutlineProductionQuantityLimits, MdInvertColors} from "react-icons/md";
+import {TbRosetteDiscountCheckFilled} from "react-icons/tb";
 
 export default function AddNewProduct() {
     //state
     const [inputs, setInputs] = useState([
         {
             id: 1,
-            placeholder: "اسم محصول را بنویسید"
+            placeholder: "اسم محصول را بنویسید",
+            icon: <MdOutlineProductionQuantityLimits/>
         },
         {
             id: 2,
-            placeholder: "قیمت محصول را بنویسید"
+            placeholder: "قیمت محصول را بنویسید",
+            icon: <FaDollarSign/>
         },
         {
             id: 3,
-            placeholder: "موجودی محصول را بنویسید"
+            placeholder: "موجودی محصول را بنویسید",
+            icon: <TbRosetteDiscountCheckFilled/>
         },
         {
             id: 4,
-            placeholder: "آدرس عکس محصول را بنویسید"
+            placeholder: "آدرس عکس محصول را بنویسید",
+            icon: <FaImage/>
         },
         {
             id: 5,
-            placeholder: "میزان محبوبیت محصول را بنویسید"
+            placeholder: "میزان محبوبیت محصول را بنویسید",
+            icon: <FaFire/>
         },
         {
             id: 6,
-            placeholder: "میزان فروش محصول را بنویسید"
+            placeholder: "میزان فروش محصول را بنویسید",
+            icon: <FaSellcast/>
         },
         {
             id: 7,
-            placeholder: "اسامی رنگ بندی محصول را بنویسید"
+            placeholder: "اسامی رنگ بندی محصول را بنویسید",
+            icon: <MdInvertColors/>
         },
     ]);
 
@@ -46,6 +56,7 @@ export default function AddNewProduct() {
                     {
                         inputs.map(input => (
                             <div key={input.id}>
+                                {input.icon}
                                 <input type="text" placeholder={input.placeholder}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
                             </div>

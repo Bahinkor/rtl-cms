@@ -33,4 +33,13 @@
         box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
     }
 
+    .modal-active {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .bg-black-05 {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
 }

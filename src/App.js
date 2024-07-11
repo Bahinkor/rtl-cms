@@ -11,7 +11,7 @@ function App() {
 
     //JSX
     return (
-        <div className="App">
+        <div className="App flex">
             <SideBar/>
 
             <main className="flex-[4] p-5 pr-[280px]">

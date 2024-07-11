@@ -4,6 +4,7 @@ import Comments from "../pages/Comments/Comments";
 import Users from "../pages/Users/Users";
 import Orders from "../pages/Orders/Orders";
 import Offs from "../pages/Offs/Offs";
+import NotFound from "../pages/NotFound/NotFound";
 
 const routes = [
     {
@@ -29,6 +30,10 @@ const routes = [
     {
         path: "/offs",
         element: <Offs/>
+    },
+    {
+        path: "*",
+        element: <NotFound/>
     },
 ];
 

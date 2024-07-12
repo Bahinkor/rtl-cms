@@ -4,22 +4,27 @@ import DetailsModal from "../DetailsModal/DetailsModal";
 
 export default function ProductsTable() {
     //state
-    const [isShowModal, setIsShowModal] = useState(false);
+    const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
+    const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
 
     //functions
     const deleteModalCancelAction = () => {
-        setIsShowModal(false);
+        setIsShowDeleteModal(false);
     };
 
     const deleteModalSubmitAction = () => {
-        setIsShowModal(false);
+        setIsShowDeleteModal(false);
     };
+
+    const detailsModalClose = () => {
+        setIsShowDetailsModal(false);
+    }
 
 
     //JSX
     return (
         <>
-            <DetailsModal/>
+
             <table className="w-full bg-[var(--white)] mt-[30px] rounded-[10px]">
                 {/* table header */}
                 <thead>
@@ -43,8 +48,8 @@ export default function ProductsTable() {
                     <td>۹۲,۰۰۰ تومان</td>
                     <td>۸۲</td>
                     <td className="[&>button]:text-[var(--white)] [&>button]:text-[1.1rem] [&>button]:bg-[var(--blue)] [&>button]:py-2 [&>button]:px-5 [&>button]:mr-5 [&>button]:rounded-[10px]">
-                        <button>جزئیات</button>
-                        <button onClick={() => setIsShowModal(true)}>حذف</button>
+                        <button onClick={() => setIsShowDetailsModal(true)}>جزئیات</button>
+                        <button onClick={() => setIsShowDeleteModal(true)}>حذف</button>
                         <button>ویرایش</button>
                     </td>
                 </tr>
@@ -54,8 +59,13 @@ export default function ProductsTable() {
 
             {/* Delete modal component */}
             {
-                isShowModal &&
+                isShowDeleteModal &&
                 <DeleteModal cancelAction={deleteModalCancelAction} submitAction={deleteModalSubmitAction}/>
+            }
+
+            {/* Details modal component */}
+            {
+                isShowDetailsModal && <DetailsModal onClose={detailsModalClose}/>
             }
 
         </>

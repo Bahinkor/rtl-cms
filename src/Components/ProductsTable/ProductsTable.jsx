@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import DeleteModal from "../DeleteModal/DeleteModal";
+import DetailsModal from "../DetailsModal/DetailsModal";
 
 export default function ProductsTable() {
     //state
@@ -18,7 +19,7 @@ export default function ProductsTable() {
     //JSX
     return (
         <>
-
+            <DetailsModal/>
             <table className="w-full bg-[var(--white)] mt-[30px] rounded-[10px]">
                 {/* table header */}
                 <thead>
@@ -53,7 +54,8 @@ export default function ProductsTable() {
 
             {/* Delete modal component */}
             {
-                isShowModal && <DeleteModal cancelAction={deleteModalCancelAction} submitAction={deleteModalSubmitAction}/>
+                isShowModal &&
+                <DeleteModal cancelAction={deleteModalCancelAction} submitAction={deleteModalSubmitAction}/>
             }
 
         </>

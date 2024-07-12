@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import DeleteModal from "../DeleteModal/DeleteModal";
 import DetailsModal from "../DetailsModal/DetailsModal";
+import EditModal from "../EditModal/EditModal";
 
 export default function ProductsTable() {
     //state
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
+    const [isShowEditModal, setIsShowEditModal] = useState(false);
 
     //functions
     const deleteModalCancelAction = () => {
@@ -18,6 +20,16 @@ export default function ProductsTable() {
 
     const detailsModalClose = () => {
         setIsShowDetailsModal(false);
+    }
+
+    const editModalSubmitAction = (e) => {
+        e.preventDefault();
+        setIsShowEditModal(false);
+    }
+
+    const editModalClose = (e) => {
+        e.preventDefault();
+        setIsShowEditModal(false);
     }
 
 
@@ -50,7 +62,7 @@ export default function ProductsTable() {
                     <td className="[&>button]:text-[var(--white)] [&>button]:text-[1.1rem] [&>button]:bg-[var(--blue)] [&>button]:py-2 [&>button]:px-5 [&>button]:mr-5 [&>button]:rounded-[10px]">
                         <button onClick={() => setIsShowDetailsModal(true)}>جزئیات</button>
                         <button onClick={() => setIsShowDeleteModal(true)}>حذف</button>
-                        <button>ویرایش</button>
+                        <button onClick={() => setIsShowEditModal(true)}>ویرایش</button>
                     </td>
                 </tr>
 
@@ -66,6 +78,18 @@ export default function ProductsTable() {
             {/* Details modal component */}
             {
                 isShowDetailsModal && <DetailsModal onClose={detailsModalClose}/>
+            }
+
+            {/* Edit modal component */}
+            {
+                isShowEditModal && (
+                    <EditModal
+                        onSubmit={editModalSubmitAction}
+                        onClose={editModalClose}
+                    >
+
+                    </EditModal>
+                )
             }
 
         </>

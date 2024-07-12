@@ -6,7 +6,7 @@ export default function DeleteModal() {
     return ReactDOM.createPortal(
         // bg-black-05 is custom class
         <div
-            className="fixed z-20 flex items-center justify-center size-full bg-black-05 opacity-0 invisible transition modal-active">
+            className="fixed top-0 z-20 flex items-center justify-center size-full bg-black-05 opacity-0 invisible transition modal-active">
             {/* delete modal */}
             <div className="bg-[var(--white)] text-center p-[50px] rounded-xl">
                 <h2 className="text-[2rem]">آیا از حذف اطمینان دارید؟</h2>

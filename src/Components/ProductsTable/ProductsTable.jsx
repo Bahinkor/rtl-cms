@@ -1,9 +1,34 @@
 import React, {useState} from 'react';
+import {AiOutlineDollarCircle} from 'react-icons/ai';
 import DeleteModal from "../DeleteModal/DeleteModal";
 import DetailsModal from "../DetailsModal/DetailsModal";
 import EditModal from "../EditModal/EditModal";
 
 export default function ProductsTable() {
+    //state (edit modal items)
+    const [editModalItems, setEditModalItems] = useState([
+        {
+            id: 1,
+            placeholder: "عنوان جدید را وارد کنید",
+            icon: <AiOutlineDollarCircle/>
+        },
+        {
+            id: 1,
+            placeholder: "عنوان جدید را وارد کنید",
+            icon: <AiOutlineDollarCircle/>
+        },
+        {
+            id: 1,
+            placeholder: "عنوان جدید را وارد کنید",
+            icon: <AiOutlineDollarCircle/>
+        },
+        {
+            id: 1,
+            placeholder: "عنوان جدید را وارد کنید",
+            icon: <AiOutlineDollarCircle/>
+        },
+    ]);
+
     //state
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
@@ -87,7 +112,19 @@ export default function ProductsTable() {
                         onSubmit={editModalSubmitAction}
                         onClose={editModalClose}
                     >
-
+                        {
+                            editModalItems.map(item => (
+                                <div
+                                    className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]"
+                                    key={item.id}>
+                                    <span>
+                                        {item.icon}
+                                    </span>
+                                    <input type="text" placeholder={item.placeholder}
+                                           className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+                                </div>
+                            ))
+                        }
                     </EditModal>
                 )
             }

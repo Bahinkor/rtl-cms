@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {AiOutlineDollarCircle} from 'react-icons/ai';
 import DeleteModal from "../DeleteModal/DeleteModal";
 import DetailsModal from "../DetailsModal/DetailsModal";
 import EditModal from "../EditModal/EditModal";
 
 export default function ProductsTable() {
-    //state (edit modal items)
+    //state (products & items)
+    const [allProducts, setAllProducts] = useState([]);
     const [editModalItems, setEditModalItems] = useState([
         {
             id: 1,
@@ -33,6 +34,19 @@ export default function ProductsTable() {
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
     const [isShowEditModal, setIsShowEditModal] = useState(false);
+
+    //useEffect
+    useEffect(() => {
+        async function fetchAllProducts() {
+            await fetch("http://localhost:3000/api/products/")
+                .then(res => res.json())
+                .then(data => setAllProducts(data))
+                .catch(err => console.log(err));
+        }
+
+        // call function
+        fetchAllProducts();
+    }, [])
 
     //functions
     const deleteModalCancelAction = () => {
@@ -76,20 +90,25 @@ export default function ProductsTable() {
                 {/* products list */}
                 <tbody>
 
-                <tr className="flex justify-between text-center pr-[10px] pl-[30px] [&>td]:flex [&>td]:items-center [&>td]:p-5">
-                    <td>
-                        <img src="/images/admin-profile01.jpg" alt="product image"
-                             className="w-[150px] rounded-[10px] object-cover"/>
-                    </td>
-                    <td>روغن سرخ کردنی</td>
-                    <td>۹۲,۰۰۰ تومان</td>
-                    <td>۸۲</td>
-                    <td className="[&>button]:text-[var(--white)] [&>button]:text-[1.1rem] [&>button]:bg-[var(--blue)] [&>button]:py-2 [&>button]:px-5 [&>button]:mr-5 [&>button]:rounded-[10px]">
-                        <button onClick={() => setIsShowDetailsModal(true)}>جزئیات</button>
-                        <button onClick={() => setIsShowDeleteModal(true)}>حذف</button>
-                        <button onClick={() => setIsShowEditModal(true)}>ویرایش</button>
-                    </td>
-                </tr>
+                {
+                    allProducts.map(product => (
+                        <tr key={product.id}
+                            className="flex justify-between text-center pr-[10px] pl-[30px] [&>td]:flex [&>td]:items-center [&>td]:p-5">
+                            <td>
+                                <img src={product.img} alt="product image"
+                                     className="w-[150px] rounded-[10px] object-cover"/>
+                            </td>
+                            <td>{product.title}</td>
+                            <td>{product.price.toLocaleString()} تومان</td>
+                            <td>{product.count}</td>
+                            <td className="[&>button]:text-[var(--white)] [&>button]:text-[1.1rem] [&>button]:bg-[var(--blue)] [&>button]:py-2 [&>button]:px-5 [&>button]:mr-5 [&>button]:rounded-[10px]">
+                                <button onClick={() => setIsShowDetailsModal(true)}>جزئیات</button>
+                                <button onClick={() => setIsShowDeleteModal(true)}>حذف</button>
+                                <button onClick={() => setIsShowEditModal(true)}>ویرایش</button>
+                            </td>
+                        </tr>
+                    ))
+                }
 
                 </tbody>
             </table>

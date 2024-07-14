@@ -14,17 +14,17 @@ export default function ProductsTable() {
             icon: <AiOutlineDollarCircle/>
         },
         {
-            id: 1,
+            id: 2,
             placeholder: "عنوان جدید را وارد کنید",
             icon: <AiOutlineDollarCircle/>
         },
         {
-            id: 1,
+            id: 3,
             placeholder: "عنوان جدید را وارد کنید",
             icon: <AiOutlineDollarCircle/>
         },
         {
-            id: 1,
+            id: 4,
             placeholder: "عنوان جدید را وارد کنید",
             icon: <AiOutlineDollarCircle/>
         },

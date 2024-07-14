@@ -14,8 +14,8 @@ export default function EditModal({onSubmit, onClose, children}) {
 
                     <div
                         className="flex justify-end gap-3 mt-5 [&>*]:px-[8px] [&>*]:py-[5px] [&>*]:text-[var(--white)] [&>*]:text-[1.1rem] [&>*]:rounded-[10px]">
-                        <button className="bg-[var(--blue)]" onClick={(e) => onSubmit(e)}>ارسال</button>
                         <button className="bg-red-500" onClick={(e) => onClose(e)}>بستن</button>
+                        <button className="bg-[var(--blue)]" onClick={(e) => onSubmit(e)}>ارسال</button>
                     </div>
                 </form>
             </div>

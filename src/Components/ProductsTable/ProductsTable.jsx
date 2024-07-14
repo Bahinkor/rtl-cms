@@ -35,18 +35,20 @@ export default function ProductsTable() {
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
     const [isShowEditModal, setIsShowEditModal] = useState(false);
+    const [mainProductId, setMainProductId] = useState(null);
+
+    // Get all products (API)
+    const getAllProducts = async () => {
+        await fetch("http://localhost:3000/api/products/")
+            .then(res => res.json())
+            .then(data => setAllProducts(data))
+            .catch(err => console.log(err));
+    }
 
     //useEffect
     useEffect(() => {
-        async function fetchAllProducts() {
-            await fetch("http://localhost:3000/api/products/")
-                .then(res => res.json())
-                .then(data => setAllProducts(data))
-                .catch(err => console.log(err));
-        }
-
         // call function
-        fetchAllProducts();
+        getAllProducts();
     }, [])
 
     //functions
@@ -55,7 +57,16 @@ export default function ProductsTable() {
     };
 
     const deleteModalSubmitAction = () => {
-        setIsShowDeleteModal(false);
+        fetch(`http://localhost:3000/api/products/${mainProductId}`, {
+            method: "DELETE",
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                setIsShowDeleteModal(false);
+                getAllProducts();
+            })
+            .catch(err => console.log(err));
     };
 
     const detailsModalClose = () => {
@@ -106,7 +117,11 @@ export default function ProductsTable() {
                                     <td>{product.count}</td>
                                     <td className="[&>button]:text-[var(--white)] [&>button]:text-[1.1rem] [&>button]:bg-[var(--blue)] [&>button]:py-2 [&>button]:px-5 [&>button]:mr-5 [&>button]:rounded-[10px]">
                                         <button onClick={() => setIsShowDetailsModal(true)}>جزئیات</button>
-                                        <button onClick={() => setIsShowDeleteModal(true)}>حذف</button>
+                                        <button onClick={() => {
+                                            setIsShowDeleteModal(true)
+                                            setMainProductId(product.id)
+                                        }}>حذف
+                                        </button>
                                         <button onClick={() => setIsShowEditModal(true)}>ویرایش</button>
                                     </td>
                                 </tr>

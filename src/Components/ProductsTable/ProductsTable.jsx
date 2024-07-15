@@ -27,52 +27,9 @@ export default function ProductsTable() {
     const [productNewSale, setProductNewSale] = useState("");
     const [productNewColors, setProductNewColors] = useState("");
 
-    //state (products & edit modal items)
+    //state (all products)
     const [allProducts, setAllProducts] = useState([]);
-    const [editModalItems, setEditModalItems] = useState([
-        {
-            id: 1,
-            placeholder: "عنوان جدید را وارد کنید",
-            icon: <MdOutlineProductionQuantityLimits/>,
-            value: productNewTitle
-        },
-        {
-            id: 2,
-            placeholder: "قیمت جدید را وارد کنید",
-            icon: <AiOutlineDollarCircle/>,
-            value: productNewPrice
-        },
-        {
-            id: 3,
-            placeholder: "موجودی جدید را وارد کنید",
-            icon: <TbRosetteDiscountCheckFilled/>,
-            value: productNewCount
-        },
-        {
-            id: 4,
-            placeholder: "کاور جدید را وارد کنید",
-            icon: <FaImage/>,
-            value: productNewImage
-        },
-        {
-            id: 5,
-            placeholder: "محبوبیت جدید را وارد کنید",
-            icon: <FaFire/>,
-            value: productNewPopularity
-        },
-        {
-            id: 6,
-            placeholder: "میزان فروش را وارد کنید",
-            icon: <FaSellcast/>,
-            value: productNewSale
-        },
-        {
-            id: 7,
-            placeholder: "اسامی رنگ بندی را وارد کنید",
-            icon: <MdInvertColors/>,
-            value: productNewColors
-        },
-    ]);
+
 
     //state
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
@@ -86,7 +43,10 @@ export default function ProductsTable() {
         await fetch("http://localhost:3000/api/products/")
             .then(res => res.json())
             .then(data => setAllProducts(data))
-            .catch(err => console.log(err));
+            .catch(err => {
+                errorNotification();
+                console.log(err);
+            });
     }
 
     //useEffect
@@ -123,6 +83,34 @@ export default function ProductsTable() {
 
     const editModalSubmitAction = (e) => {
         e.preventDefault();
+
+        const productNewInfos = {
+            title: productNewTitle,
+            price: productNewPrice,
+            count: productNewCount,
+            img: productNewImage,
+            popularity: productNewPopularity,
+            sale: productNewSale,
+            colors: productNewColors,
+        }
+
+        fetch(`http://localhost:3000/api/products/${mainProductId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(productNewInfos)
+        })
+            .then(res => res.json())
+            .then(data => {
+                successPutNotification();
+                getAllProducts();
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err)
+            })
+
         setIsShowEditModal(false);
     }
 
@@ -131,52 +119,14 @@ export default function ProductsTable() {
         setIsShowEditModal(false);
     }
 
-    // Update edit modal items
     const updateEditModalItems = product => {
-        setEditModalItems([
-            {
-                id: 1,
-                placeholder: "عنوان جدید را وارد کنید",
-                icon: <MdOutlineProductionQuantityLimits/>,
-                value: product.title
-            },
-            {
-                id: 2,
-                placeholder: "قیمت جدید را وارد کنید",
-                icon: <AiOutlineDollarCircle/>,
-                value: product.price
-            },
-            {
-                id: 3,
-                placeholder: "موجودی جدید را وارد کنید",
-                icon: <TbRosetteDiscountCheckFilled/>,
-                value: product.count
-            },
-            {
-                id: 4,
-                placeholder: "کاور جدید را وارد کنید",
-                icon: <FaImage/>,
-                value: product.img
-            },
-            {
-                id: 5,
-                placeholder: "محبوبیت جدید را وارد کنید",
-                icon: <FaFire/>,
-                value: product.popularity
-            },
-            {
-                id: 6,
-                placeholder: "میزان فروش را وارد کنید",
-                icon: <FaSellcast/>,
-                value: product.sale
-            },
-            {
-                id: 7,
-                placeholder: "اسامی رنگ بندی را وارد کنید",
-                icon: <MdInvertColors/>,
-                value: product.colors
-            }
-        ])
+        setProductNewTitle(product.title);
+        setProductNewPrice(product.price);
+        setProductNewCount(product.count);
+        setProductNewImage(product.img);
+        setProductNewPopularity(product.popularity);
+        setProductNewSale(product.sale);
+        setProductNewColors(product.colors);
     }
 
 
@@ -224,7 +174,8 @@ export default function ProductsTable() {
                                             }}>حذف
                                             </button>
                                             <button onClick={() => {
-                                                setIsShowEditModal(true)
+                                                setIsShowEditModal(true);
+                                                setMainProductId(product.id);
                                                 // defaults value
                                                 updateEditModalItems(product);
                                             }}>ویرایش
@@ -287,19 +238,91 @@ export default function ProductsTable() {
                         onSubmit={editModalSubmitAction}
                         onClose={editModalClose}
                     >
-                        {
-                            editModalItems.map(item => (
-                                <div
-                                    className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]"
-                                    key={item.id}>
-                                    <span>
-                                        {item.icon}
-                                    </span>
-                                    <input type="text" placeholder={item.placeholder} value={item.value}
-                                           className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
-                                </div>
-                            ))
-                        }
+
+                        <div>
+
+                            <label htmlFor="#edit-title-input"></label>
+                            <div
+                                className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+
+                            <span>
+                                <MdOutlineProductionQuantityLimits/>
+                            </span>
+                                <input type="text" placeholder="عنوان جدید را وارد کنید" value={productNewTitle}
+                                       onChange={e => setProductNewTitle(e.target.value)}
+                                       className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
+                                       id="edit-title-input"/>
+                            </div>
+                            
+                        </div>
+                        <div
+                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+
+                            <span>
+                                <AiOutlineDollarCircle/>
+                            </span>
+                            <input type="text" placeholder="قیمت جدید را وارد کنید" value={productNewPrice}
+                                   onChange={e => setProductNewPrice(e.target.value)}
+                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+
+                        </div>
+                        <div
+                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+
+                            <span>
+                                <TbRosetteDiscountCheckFilled/>
+                            </span>
+                            <input type="text" placeholder="موجودی جدید را وارد کنید" value={productNewCount}
+                                   onChange={e => setProductNewCount(e.target.value)}
+                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+
+                        </div>
+                        <div
+                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+
+                            <span>
+                                <FaImage/>
+                            </span>
+                            <input type="text" placeholder="کاور جدید را وارد کنید" value={productNewImage}
+                                   onChange={e => setProductNewImage(e.target.value)}
+                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+
+                        </div>
+                        <div
+                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+
+                            <span>
+                                <FaFire/>
+                            </span>
+                            <input type="text" placeholder="محبوبیت جدید را وارد کنید" value={productNewPopularity}
+                                   onChange={e => setProductNewPopularity(e.target.value)}
+                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+
+                        </div>
+                        <div
+                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+
+                            <span>
+                                <FaSellcast/>
+                            </span>
+                            <input type="text" placeholder="میزان فروش را وارد کنید" value={productNewSale}
+                                   onChange={e => setProductNewSale(e.target.value)}
+                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+
+                        </div>
+                        <
+                            div
+                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+
+                            <span>
+                                <MdInvertColors/>
+                            </span>
+                            <input type="text" placeholder="اسامی رنگ بندی را وارد کنید" value={productNewColors}
+                                   onChange={e => setProductNewColors(e.target.value)}
+                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+
+                        </div>
+
                     </EditModal>
                 )
             }

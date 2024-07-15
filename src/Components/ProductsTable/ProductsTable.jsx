@@ -7,6 +7,7 @@ import DeleteModal from "../DeleteModal/DeleteModal";
 import DetailsModal from "../DetailsModal/DetailsModal";
 import EditModal from "../EditModal/EditModal";
 import ErrorBox from "../ErrorBox/ErrorBox";
+import Loading from "../Loading/Loading";
 //react-toastify package
 import {ToastContainer, toast} from 'react-toastify';
 //styles
@@ -28,7 +29,7 @@ export default function ProductsTable() {
     const [productNewColors, setProductNewColors] = useState("");
 
     //state (all products)
-    const [allProducts, setAllProducts] = useState([]);
+    const [allProducts, setAllProducts] = useState(null);
 
 
     //state
@@ -135,7 +136,9 @@ export default function ProductsTable() {
         <>
 
             {
-                allProducts.length ? (
+                allProducts === null ? (
+                    <Loading/>
+                ) : allProducts.length ? (
                     <>
                         <table className="w-full bg-[var(--white)] mt-[30px] rounded-[10px]">
                             {/* table header */}

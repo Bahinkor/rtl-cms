@@ -1,4 +1,7 @@
 import React, {useState, useEffect} from 'react';
+import {FaImage, FaFire, FaSellcast} from "react-icons/fa";
+import {MdOutlineProductionQuantityLimits, MdInvertColors} from "react-icons/md";
+import {TbRosetteDiscountCheckFilled} from "react-icons/tb";
 import {AiOutlineDollarCircle} from 'react-icons/ai';
 import DeleteModal from "../DeleteModal/DeleteModal";
 import DetailsModal from "../DetailsModal/DetailsModal";
@@ -11,31 +14,63 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function ProductsTable() {
     //react-toastify package variables
-    const successNotification = () => toast.success(".محصول مورد نظر حذف شد");
+    const successDeleteNotification = () => toast.success(".محصول مورد نظر حذف شد");
+    const successPutNotification = () => toast.success(".محصول مورد نظر ویرایش شد");
     const errorNotification = () => toast.error("!اوه، با خطا مواجه شدیم");
 
-    //state (products & items)
+    //state (PUT - New product titles)
+    const [productNewTitle, setProductNewTitle] = useState("");
+    const [productNewPrice, setProductNewPrice] = useState("");
+    const [productNewCount, setProductNewCount] = useState("");
+    const [productNewImage, setProductNewImage] = useState("");
+    const [productNewPopularity, setProductNewPopularity] = useState("");
+    const [productNewSale, setProductNewSale] = useState("");
+    const [productNewColors, setProductNewColors] = useState("");
+
+    //state (products & edit modal items)
     const [allProducts, setAllProducts] = useState([]);
     const [editModalItems, setEditModalItems] = useState([
         {
             id: 1,
             placeholder: "عنوان جدید را وارد کنید",
-            icon: <AiOutlineDollarCircle/>
+            icon: <MdOutlineProductionQuantityLimits/>,
+            value: productNewTitle
         },
         {
             id: 2,
-            placeholder: "عنوان جدید را وارد کنید",
-            icon: <AiOutlineDollarCircle/>
+            placeholder: "قیمت جدید را وارد کنید",
+            icon: <AiOutlineDollarCircle/>,
+            value: productNewPrice
         },
         {
             id: 3,
-            placeholder: "عنوان جدید را وارد کنید",
-            icon: <AiOutlineDollarCircle/>
+            placeholder: "موجودی جدید را وارد کنید",
+            icon: <TbRosetteDiscountCheckFilled/>,
+            value: productNewCount
         },
         {
             id: 4,
-            placeholder: "عنوان جدید را وارد کنید",
-            icon: <AiOutlineDollarCircle/>
+            placeholder: "کاور جدید را وارد کنید",
+            icon: <FaImage/>,
+            value: productNewImage
+        },
+        {
+            id: 5,
+            placeholder: "محبوبیت جدید را وارد کنید",
+            icon: <FaFire/>,
+            value: productNewPopularity
+        },
+        {
+            id: 6,
+            placeholder: "میزان فروش را وارد کنید",
+            icon: <FaSellcast/>,
+            value: productNewSale
+        },
+        {
+            id: 7,
+            placeholder: "اسامی رنگ بندی را وارد کنید",
+            icon: <MdInvertColors/>,
+            value: productNewColors
         },
     ]);
 
@@ -72,7 +107,7 @@ export default function ProductsTable() {
             .then(res => res.json())
             .then(data => {
                 deleteModalCancelAction();
-                successNotification();
+                successDeleteNotification();
                 getAllProducts();
             })
             .catch(err => {
@@ -94,6 +129,54 @@ export default function ProductsTable() {
     const editModalClose = (e) => {
         e.preventDefault();
         setIsShowEditModal(false);
+    }
+
+    // Update edit modal items
+    const updateEditModalItems = product => {
+        setEditModalItems([
+            {
+                id: 1,
+                placeholder: "عنوان جدید را وارد کنید",
+                icon: <MdOutlineProductionQuantityLimits/>,
+                value: product.title
+            },
+            {
+                id: 2,
+                placeholder: "قیمت جدید را وارد کنید",
+                icon: <AiOutlineDollarCircle/>,
+                value: product.price
+            },
+            {
+                id: 3,
+                placeholder: "موجودی جدید را وارد کنید",
+                icon: <TbRosetteDiscountCheckFilled/>,
+                value: product.count
+            },
+            {
+                id: 4,
+                placeholder: "کاور جدید را وارد کنید",
+                icon: <FaImage/>,
+                value: product.img
+            },
+            {
+                id: 5,
+                placeholder: "محبوبیت جدید را وارد کنید",
+                icon: <FaFire/>,
+                value: product.popularity
+            },
+            {
+                id: 6,
+                placeholder: "میزان فروش را وارد کنید",
+                icon: <FaSellcast/>,
+                value: product.sale
+            },
+            {
+                id: 7,
+                placeholder: "اسامی رنگ بندی را وارد کنید",
+                icon: <MdInvertColors/>,
+                value: product.colors
+            }
+        ])
     }
 
 
@@ -140,7 +223,12 @@ export default function ProductsTable() {
                                                 setMainProductId(product.id)
                                             }}>حذف
                                             </button>
-                                            <button onClick={() => setIsShowEditModal(true)}>ویرایش</button>
+                                            <button onClick={() => {
+                                                setIsShowEditModal(true)
+                                                // defaults value
+                                                updateEditModalItems(product);
+                                            }}>ویرایش
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
@@ -207,7 +295,7 @@ export default function ProductsTable() {
                                     <span>
                                         {item.icon}
                                     </span>
-                                    <input type="text" placeholder={item.placeholder}
+                                    <input type="text" placeholder={item.placeholder} value={item.value}
                                            className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
                                 </div>
                             ))

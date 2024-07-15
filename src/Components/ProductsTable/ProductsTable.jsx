@@ -4,8 +4,16 @@ import DeleteModal from "../DeleteModal/DeleteModal";
 import DetailsModal from "../DetailsModal/DetailsModal";
 import EditModal from "../EditModal/EditModal";
 import ErrorBox from "../ErrorBox/ErrorBox";
+//react-toastify package
+import {ToastContainer, toast} from 'react-toastify';
+//styles
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ProductsTable() {
+    //react-toastify package variables
+    const successNotification = () => toast.success(".محصول مورد نظر حذف شد");
+    const errorNotification = () => toast.error("!اوه، با خطا مواجه شدیم");
+
     //state (products & items)
     const [allProducts, setAllProducts] = useState([]);
     const [editModalItems, setEditModalItems] = useState([
@@ -62,11 +70,15 @@ export default function ProductsTable() {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                setIsShowDeleteModal(false);
+                deleteModalCancelAction();
+                successNotification();
                 getAllProducts();
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                deleteModalCancelAction();
+                errorNotification();
+                console.log(err)
+            });
     };
 
     const detailsModalClose = () => {
@@ -90,46 +102,53 @@ export default function ProductsTable() {
 
             {
                 allProducts.length ? (
-                    <table className="w-full bg-[var(--white)] mt-[30px] rounded-[10px]">
-                        {/* table header */}
-                        <thead>
-                        <tr className="flex justify-between text-center pr-[70px] pl-[460px]">
-                            <th>عکس</th>
-                            <th>اسم</th>
-                            <th>قیمت</th>
-                            <th>موجودی</th>
-                        </tr>
-                        </thead>
+                    <>
+                        <table className="w-full bg-[var(--white)] mt-[30px] rounded-[10px]">
+                            {/* table header */}
+                            <thead>
+                            <tr className="flex justify-between text-center pr-[70px] pl-[460px]">
+                                <th>عکس</th>
+                                <th>اسم</th>
+                                <th>قیمت</th>
+                                <th>موجودی</th>
+                            </tr>
+                            </thead>
 
-                        {/* products list */}
-                        <tbody>
+                            {/* products list */}
+                            <tbody>
 
-                        {
-                            allProducts.map(product => (
-                                <tr key={product.id}
-                                    className="flex justify-between text-center pr-[10px] pl-[30px] [&>td]:flex [&>td]:items-center [&>td]:p-5">
-                                    <td>
-                                        <img src={product.img} alt="product image"
-                                             className="w-[150px] rounded-[10px] object-cover"/>
-                                    </td>
-                                    <td>{product.title}</td>
-                                    <td>{product.price.toLocaleString()} تومان</td>
-                                    <td>{product.count}</td>
-                                    <td className="[&>button]:text-[var(--white)] [&>button]:text-[1.1rem] [&>button]:bg-[var(--blue)] [&>button]:py-2 [&>button]:px-5 [&>button]:mr-5 [&>button]:rounded-[10px]">
-                                        <button onClick={() => setIsShowDetailsModal(true)}>جزئیات</button>
-                                        <button onClick={() => {
-                                            setIsShowDeleteModal(true)
-                                            setMainProductId(product.id)
-                                        }}>حذف
-                                        </button>
-                                        <button onClick={() => setIsShowEditModal(true)}>ویرایش</button>
-                                    </td>
-                                </tr>
-                            ))
-                        }
+                            {
+                                allProducts.map(product => (
+                                    <tr key={product.id}
+                                        className="flex justify-between text-center pr-[10px] pl-[30px] [&>td]:flex [&>td]:items-center [&>td]:p-5">
+                                        <td>
+                                            <img src={product.img} alt="product image"
+                                                 className="w-[150px] rounded-[10px] object-cover"/>
+                                        </td>
+                                        <td>{product.title}</td>
+                                        <td>{product.price.toLocaleString()} تومان</td>
+                                        <td>{product.count}</td>
+                                        <td className="[&>button]:text-[var(--white)] [&>button]:text-[1.1rem] [&>button]:bg-[var(--blue)] [&>button]:py-2 [&>button]:px-5 [&>button]:mr-5 [&>button]:rounded-[10px]">
+                                            <button onClick={() => setIsShowDetailsModal(true)}>جزئیات</button>
+                                            <button onClick={() => {
+                                                setIsShowDeleteModal(true)
+                                                setMainProductId(product.id)
+                                            }}>حذف
+                                            </button>
+                                            <button onClick={() => setIsShowEditModal(true)}>ویرایش</button>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+
+                        {/* Notification Modal */}
+                        <div className="text-right">
+                            <ToastContainer/>
+                        </div>
+                    </>
                 ) : (
                     <ErrorBox message="هیچ محصولی یافت نشد."/>
                 )

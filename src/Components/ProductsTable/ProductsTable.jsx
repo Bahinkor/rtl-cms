@@ -239,11 +239,11 @@ export default function ProductsTable() {
                         onClose={editModalClose}
                     >
 
-                        <div>
+                        <div className="flex flex-col items-start [&>label]:text-[var(--blue)]">
 
-                            <label htmlFor="#edit-title-input"></label>
+                            <label htmlFor="#edit-title-input">عنوان محصول:</label>
                             <div
-                                className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+                                className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-1 rounded-[10px]">
 
                             <span>
                                 <MdOutlineProductionQuantityLimits/>
@@ -253,73 +253,108 @@ export default function ProductsTable() {
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-title-input"/>
                             </div>
-                            
+
                         </div>
-                        <div
-                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+                        {/*  */}
+                        <div className="flex flex-col items-start [&>label]:text-[var(--blue)]">
+
+                            <label htmlFor="#edit-price-input">قیمت محصول:</label>
+                            <div
+                                className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-1 rounded-[10px]">
 
                             <span>
                                 <AiOutlineDollarCircle/>
                             </span>
-                            <input type="text" placeholder="قیمت جدید را وارد کنید" value={productNewPrice}
-                                   onChange={e => setProductNewPrice(e.target.value)}
-                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+                                <input type="text" placeholder="قیمت جدید را وارد کنید" value={productNewPrice}
+                                       onChange={e => setProductNewPrice(e.target.value)}
+                                       className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
+                                       id="edit-price-input"/>
+                            </div>
 
                         </div>
-                        <div
-                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+                        {/*  */}
+                        <div className="flex flex-col items-start [&>label]:text-[var(--blue)]">
+
+                            <label htmlFor="#edit-count-input">موجودی محصول:</label>
+                            <div
+                                className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-1 rounded-[10px]">
 
                             <span>
                                 <TbRosetteDiscountCheckFilled/>
                             </span>
-                            <input type="text" placeholder="موجودی جدید را وارد کنید" value={productNewCount}
-                                   onChange={e => setProductNewCount(e.target.value)}
-                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+                                <input type="text" placeholder="موجودی جدید را وارد کنید" value={productNewCount}
+                                       onChange={e => setProductNewCount(e.target.value)}
+                                       className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
+                                       id="edit-count-input"/>
+                            </div>
 
                         </div>
-                        <div
-                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+                        {/*  */}
+                        <div className="flex flex-col items-start [&>label]:text-[var(--blue)]">
+
+                            <label htmlFor="#edit-image-input">کاور محصول:</label>
+                            <div
+                                className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-1 rounded-[10px]">
 
                             <span>
                                 <FaImage/>
                             </span>
-                            <input type="text" placeholder="کاور جدید را وارد کنید" value={productNewImage}
-                                   onChange={e => setProductNewImage(e.target.value)}
-                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+                                <input type="text" placeholder="کاور جدید را وارد کنید" value={productNewImage}
+                                       onChange={e => setProductNewImage(e.target.value)}
+                                       className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
+                                       id="edit-image-input"/>
+                            </div>
 
                         </div>
-                        <div
-                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+                        {/*  */}
+                        <div className="flex flex-col items-start [&>label]:text-[var(--blue)]">
+
+                            <label htmlFor="#edit-popularity-input">محبوبیت محصول:</label>
+                            <div
+                                className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-1 rounded-[10px]">
 
                             <span>
                                 <FaFire/>
                             </span>
-                            <input type="text" placeholder="محبوبیت جدید را وارد کنید" value={productNewPopularity}
-                                   onChange={e => setProductNewPopularity(e.target.value)}
-                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+                                <input type="text" placeholder="محبوبیت جدید را وارد کنید" value={productNewPopularity}
+                                       onChange={e => setProductNewPopularity(e.target.value)}
+                                       className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
+                                       id="edit-popularity-input"/>
+                            </div>
 
                         </div>
-                        <div
-                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+                        {/*  */}
+                        <div className="flex flex-col items-start [&>label]:text-[var(--blue)]">
+
+                            <label htmlFor="#edit-sale-input">میزان فروش محصول:</label>
+                            <div
+                                className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-1 rounded-[10px]">
 
                             <span>
                                 <FaSellcast/>
                             </span>
-                            <input type="text" placeholder="میزان فروش را وارد کنید" value={productNewSale}
-                                   onChange={e => setProductNewSale(e.target.value)}
-                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+                                <input type="text" placeholder="میزان فروش را وارد کنید" value={productNewSale}
+                                       onChange={e => setProductNewSale(e.target.value)}
+                                       className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
+                                       id="edit-sale-input"/>
+                            </div>
 
                         </div>
-                        <
-                            div
-                            className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-[15px] rounded-[10px]">
+                        {/*  */}
+                        <div className="flex flex-col items-start [&>label]:text-[var(--blue)]">
+
+                            <label htmlFor="#edit-colors-input">اسامی رنگ محصول:</label>
+                            <div
+                                className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-1 rounded-[10px]">
 
                             <span>
                                 <MdInvertColors/>
                             </span>
-                            <input type="text" placeholder="اسامی رنگ بندی را وارد کنید" value={productNewColors}
-                                   onChange={e => setProductNewColors(e.target.value)}
-                                   className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
+                                <input type="text" placeholder="اسامی رنگ بندی را وارد کنید" value={productNewColors}
+                                       onChange={e => setProductNewColors(e.target.value)}
+                                       className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
+                                       id="edit-colors-input"/>
+                            </div>
 
                         </div>
 

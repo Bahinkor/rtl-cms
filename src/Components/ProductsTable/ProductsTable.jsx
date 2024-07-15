@@ -44,6 +44,7 @@ export default function ProductsTable() {
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
     const [isShowEditModal, setIsShowEditModal] = useState(false);
     const [mainProductId, setMainProductId] = useState(null);
+    const [mainProductInfos, setMainProductInfos] = useState({});
 
     // Get all products (API)
     const getAllProducts = async () => {
@@ -129,7 +130,11 @@ export default function ProductsTable() {
                                         <td>{product.price.toLocaleString()} تومان</td>
                                         <td>{product.count}</td>
                                         <td className="[&>button]:text-[var(--white)] [&>button]:text-[1.1rem] [&>button]:bg-[var(--blue)] [&>button]:py-2 [&>button]:px-5 [&>button]:mr-5 [&>button]:rounded-[10px]">
-                                            <button onClick={() => setIsShowDetailsModal(true)}>جزئیات</button>
+                                            <button onClick={() => {
+                                                setIsShowDetailsModal(true)
+                                                setMainProductInfos(product);
+                                            }}>جزئیات
+                                            </button>
                                             <button onClick={() => {
                                                 setIsShowDeleteModal(true)
                                                 setMainProductId(product.id)
@@ -163,7 +168,28 @@ export default function ProductsTable() {
 
             {/* Details modal component */}
             {
-                isShowDetailsModal && <DetailsModal onClose={detailsModalClose}/>
+                isShowDetailsModal &&
+                <DetailsModal onClose={detailsModalClose}>
+                    <table className="w-full bg-[var(--white)] mt-5 rounded-[10px]">
+
+                        <thead>
+                        <tr className="text-center [&>*]:p-5">
+                            <th>محبوبیت</th>
+                            <th>فروش</th>
+                            <th>رنگ بندی</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr className="text-center [&>*]:p-5">
+                            <td>{mainProductInfos.popularity}</td>
+                            <td>{mainProductInfos.sale.toLocaleString()} تومان</td>
+                            <td>{mainProductInfos.colors}</td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </DetailsModal>
             }
 
             {/* Edit modal component */}

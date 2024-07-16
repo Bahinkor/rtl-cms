@@ -8,7 +8,7 @@ import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export default function AddNewProduct() {
+export default function AddNewProduct({getAllProducts}) {
     //react-toastify package variables
     const successNotification = () => toast.success(".محصول اضافه شد");
     const errorNotification = () => toast.error("!اوه، با خطا مواجه شدیم");
@@ -55,11 +55,12 @@ export default function AddNewProduct() {
             .then(res => res.json())
             .then(data => {
                 successNotification();
+                getAllProducts();
                 clearInputValues();
             })
             .catch(err => {
-                errorNotification();
                 clearInputValues();
+                errorNotification();
                 console.log(err);
             })
 

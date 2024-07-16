@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {FaImage, FaFire, FaSellcast} from "react-icons/fa";
 import {MdOutlineProductionQuantityLimits, MdInvertColors} from "react-icons/md";
 import {TbRosetteDiscountCheckFilled} from "react-icons/tb";
@@ -13,7 +13,7 @@ import {ToastContainer, toast} from 'react-toastify';
 //styles
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function ProductsTable() {
+export default function ProductsTable({allProducts, getAllProducts}) {
     //react-toastify package variables
     const successDeleteNotification = () => toast.success(".محصول مورد نظر حذف شد");
     const successPutNotification = () => toast.success(".محصول مورد نظر ویرایش شد");
@@ -28,9 +28,6 @@ export default function ProductsTable() {
     const [productNewSale, setProductNewSale] = useState("");
     const [productNewColors, setProductNewColors] = useState("");
 
-    //state (all products)
-    const [allProducts, setAllProducts] = useState(null);
-
 
     //state
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
@@ -38,23 +35,6 @@ export default function ProductsTable() {
     const [isShowEditModal, setIsShowEditModal] = useState(false);
     const [mainProductId, setMainProductId] = useState(null);
     const [mainProductInfos, setMainProductInfos] = useState({});
-
-    // Get all products (API)
-    const getAllProducts = async () => {
-        await fetch("http://localhost:3000/api/products/")
-            .then(res => res.json())
-            .then(data => setAllProducts(data))
-            .catch(err => {
-                errorNotification();
-                console.log(err);
-            });
-    }
-
-    //useEffect
-    useEffect(() => {
-        // call function
-        getAllProducts();
-    }, [])
 
     //functions
     const deleteModalCancelAction = () => {
@@ -224,7 +204,7 @@ export default function ProductsTable() {
 
                         <tbody>
                         <tr className="text-center [&>*]:p-5">
-                            <td>{mainProductInfos.popularity}</td>
+                            <td>{mainProductInfos.popularity}%</td>
                             <td>{mainProductInfos.sale.toLocaleString()} تومان</td>
                             <td>{mainProductInfos.colors}</td>
                         </tr>

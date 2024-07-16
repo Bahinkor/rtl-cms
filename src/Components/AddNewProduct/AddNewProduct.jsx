@@ -3,15 +3,21 @@ import {FaDollarSign, FaImage, FaFire, FaSellcast} from "react-icons/fa";
 import {MdOutlineProductionQuantityLimits, MdInvertColors} from "react-icons/md";
 import {TbRosetteDiscountCheckFilled} from "react-icons/tb";
 //react-toastify package
-import {ToastContainer, toast} from "react-toastify";
-//styles
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from "react-toastify";
 
 
 export default function AddNewProduct({getAllProducts}) {
     //react-toastify package variables
-    const successNotification = () => toast.success(".محصول اضافه شد");
-    const errorNotification = () => toast.error("!اوه، با خطا مواجه شدیم");
+    const successNotification = () => toast.success("محصول اضافه شد.", {
+        rtl: true,
+        pauseOnHover: false,
+        autoClose: 3000,
+    });
+    const errorNotification = () => toast.error("اوه، با خطا مواجه شدیم!", {
+        rtl: true,
+        pauseOnHover: false,
+        autoClose: 3000,
+    });
 
     //state
     const [newProductTitle, setNewProductTitle] = useState("");
@@ -59,9 +65,9 @@ export default function AddNewProduct({getAllProducts}) {
                 clearInputValues();
             })
             .catch(err => {
-                clearInputValues();
                 errorNotification();
                 console.log(err);
+                clearInputValues();
             })
 
     }
@@ -142,10 +148,6 @@ export default function AddNewProduct({getAllProducts}) {
                 </button>
             </form>
 
-            {/* Notification Modal */}
-            <div className="text-right">
-                <ToastContainer/>
-            </div>
         </div>
     );
 }

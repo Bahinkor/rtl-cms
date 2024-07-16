@@ -9,15 +9,25 @@ import EditModal from "../EditModal/EditModal";
 import ErrorBox from "../ErrorBox/ErrorBox";
 import Loading from "../Loading/Loading";
 //react-toastify package
-import {ToastContainer, toast} from 'react-toastify';
-//styles
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
 
 export default function ProductsTable({allProducts, getAllProducts}) {
     //react-toastify package variables
-    const successDeleteNotification = () => toast.success(".محصول مورد نظر حذف شد");
-    const successPutNotification = () => toast.success(".محصول مورد نظر ویرایش شد");
-    const errorNotification = () => toast.error("!اوه، با خطا مواجه شدیم");
+    const successDeleteNotification = () => toast.success("محصول مورد نظر حذف شد.", {
+        rtl: true,
+        pauseOnHover: false,
+        autoClose: 3000,
+    });
+    const successPutNotification = () => toast.success("محصول مورد نظر ویرایش شد.", {
+        rtl: true,
+        pauseOnHover: false,
+        autoClose: 3000,
+    });
+    const errorNotification = () => toast.error("اوه، با خطا مواجه شدیم!", {
+        rtl: true,
+        pauseOnHover: false,
+        autoClose: 3000,
+    });
 
     //state (PUT - New product titles)
     const [productNewTitle, setProductNewTitle] = useState("");
@@ -170,11 +180,6 @@ export default function ProductsTable({allProducts, getAllProducts}) {
 
                             </tbody>
                         </table>
-
-                        {/* Notification Modal */}
-                        <div className="text-right">
-                            <ToastContainer/>
-                        </div>
                     </>
                 ) : (
                     <ErrorBox message="هیچ محصولی یافت نشد."/>

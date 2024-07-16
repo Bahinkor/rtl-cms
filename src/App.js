@@ -3,6 +3,9 @@ import {useRoutes} from "react-router-dom";
 import routes from "./routes/routes";
 import SideBar from "./Components/SideBar/SideBar";
 import Header from "./Components/Header/Header";
+import {ToastContainer} from "react-toastify";
+//styles
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     //Router
@@ -13,6 +16,9 @@ function App() {
     return (
         <div className="App flex">
             <SideBar/>
+
+            {/* Notification Modal */}
+            <ToastContainer/>
 
             <main className="flex-[4] p-5 pr-[280px]">
                 <Header/>

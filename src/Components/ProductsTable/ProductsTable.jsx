@@ -12,7 +12,7 @@ import Loading from "../Loading/Loading";
 import {toast} from 'react-toastify';
 
 export default function ProductsTable({allProducts, getAllProducts}) {
-    //react-toastify package variables
+    //react-toastify package functions
     const successDeleteNotification = () => toast.success("محصول مورد نظر حذف شد.", {
         rtl: true,
         pauseOnHover: false,

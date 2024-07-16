@@ -133,11 +133,12 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                         <table className="w-full bg-[var(--white)] mt-[30px] rounded-[10px]">
                             {/* table header */}
                             <thead>
-                            <tr className="flex justify-between text-center pr-[70px] pl-[460px]">
+                            <tr className="flex items-center w-full text-center py-5 [&>*]:w-full">
                                 <th>عکس</th>
                                 <th>اسم</th>
                                 <th>قیمت</th>
                                 <th>موجودی</th>
+                                <th>اکشن</th>
                             </tr>
                             </thead>
 
@@ -147,7 +148,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                             {
                                 allProducts.map(product => (
                                     <tr key={product.id}
-                                        className="flex justify-between text-center pr-[10px] pl-[30px] [&>td]:flex [&>td]:items-center [&>td]:p-5">
+                                        className="flex items-center w-full [&>td]:flex [&>td]:justify-center [&>td]:items-center [&>td]:w-full [&>td]:text-center [&>td]:p-5">
                                         <td>
                                             <img src={product.img} alt="product image"
                                                  className="w-[150px] rounded-[10px] object-cover"/>
@@ -155,18 +156,18 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                                         <td>{product.title}</td>
                                         <td>{product.price.toLocaleString()} تومان</td>
                                         <td>{product.count}</td>
-                                        <td className="[&>button]:text-[var(--white)] [&>button]:text-[1.1rem] [&>button]:bg-[var(--blue)] [&>button]:py-2 [&>button]:px-5 [&>button]:mr-5 [&>button]:rounded-[10px]">
-                                            <button onClick={() => {
+                                        <td className="[&>button]:text-[var(--white)] [&>button]:px-[8px] [&>button]:py-[5px] [&>button]:ml-1 [&>button]:rounded-[10px]">
+                                            <button className="bg-green-600" onClick={() => {
                                                 setIsShowDetailsModal(true)
                                                 setMainProductInfos(product);
                                             }}>جزئیات
                                             </button>
-                                            <button onClick={() => {
+                                            <button className="bg-red-500" onClick={() => {
                                                 setIsShowDeleteModal(true)
                                                 setMainProductId(product.id)
                                             }}>حذف
                                             </button>
-                                            <button onClick={() => {
+                                            <button className="bg-[var(--blue)]" onClick={() => {
                                                 setIsShowEditModal(true);
                                                 setMainProductId(product.id);
                                                 // defaults value

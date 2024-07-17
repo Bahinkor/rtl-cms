@@ -11,8 +11,15 @@ export default function CommentsTable() {
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [mainCommentBody, setMainCommentBody] = useState("");
+    const [mainCommentID, setMainCommentID] = useState(null);
 
     //react-toastify package function
+    const successNotification = () => toast.success("کامنت با موفقیت خذف شد.", {
+        rtl: true,
+        pauseOnHover: false,
+        autoClose: 3000,
+    });
+
     const errorNotification = () => toast.error("اوه، با خطا مواجه شدیم!", {
         rtl: true,
         pauseOnHover: false,
@@ -36,6 +43,20 @@ export default function CommentsTable() {
     const closeDeleteModal = () => setIsShowDeleteModal(false);
 
     const deleteModalSubmitAction = () => {
+
+        fetch(`http://localhost:3000/api/comments/${mainCommentID}`, {
+            method: "DELETE",
+        })
+            .then(res => res.json())
+            .then(data => {
+                successNotification();
+                getAllComments();
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err)
+            })
+
         setIsShowDeleteModal(false);
     }
 
@@ -86,7 +107,10 @@ export default function CommentsTable() {
                                     <td>{comment.date}</td>
                                     <td>{comment.hour}</td>
                                     <td className="[&>button]:btn">
-                                        <button className="red-btn" onClick={() => setIsShowDeleteModal(true)}>حذف
+                                        <button className="red-btn" onClick={() => {
+                                            setMainCommentID(comment.id);
+                                            setIsShowDeleteModal(true)
+                                        }}>حذف
                                         </button>
                                         <button className="blue-btn">پاسخ</button>
                                         <button className="green-btn">تایید</button>

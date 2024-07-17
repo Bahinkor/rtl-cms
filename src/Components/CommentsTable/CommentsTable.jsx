@@ -2,10 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {toast} from "react-toastify";
 import Loading from "../Loading/Loading";
 import ErrorBox from "../ErrorBox/ErrorBox";
+import DetailsModal from "../DetailsModal/DetailsModal";
 
 export default function CommentsTable() {
     //state
     const [allComments, setAllComments] = useState(null);
+    const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
+    const [mainCommentBody, setMainCommentBody] = useState("");
 
     //react-toastify package function
     const errorNotification = () => toast.error("اوه، با خطا مواجه شدیم!", {
@@ -25,6 +28,10 @@ export default function CommentsTable() {
                 console.log(err);
             })
 
+    }
+
+    const closeDetailsModal = () => {
+        setIsShowDetailsModal(false);
     }
 
     //useEffect
@@ -65,7 +72,11 @@ export default function CommentsTable() {
                                     <td>{comment.userID}</td>
                                     <td>{comment.productID}</td>
                                     <td className="[&>button]:bg-[var(--blue)] [&>button]:text-[var(--white)] [&>button]:px-[8px] [&>button]:py-[5px] [&>button]:rounded-[10px]">
-                                        <button>نمایش</button>
+                                        <button onClick={() => {
+                                            setMainCommentBody(comment.body);
+                                            setIsShowDetailsModal(true)
+                                        }}>نمایش
+                                        </button>
                                     </td>
                                     <td>{comment.date}</td>
                                     <td>{comment.hour}</td>
@@ -83,6 +94,15 @@ export default function CommentsTable() {
 
                 ) : (
                     <ErrorBox message="هیچ کامنتی یافت نشد."/>
+                )
+
+            }
+
+            {
+                isShowDetailsModal && (
+                    <DetailsModal onClose={closeDetailsModal}>
+                        <p className="w-[400px] bg-[var(--white)] p-5">{mainCommentBody}</p>
+                    </DetailsModal>
                 )
             }
 

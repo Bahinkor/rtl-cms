@@ -156,18 +156,18 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                                         <td>{product.title}</td>
                                         <td>{product.price.toLocaleString()} تومان</td>
                                         <td>{product.count}</td>
-                                        <td className="[&>button]:text-[var(--white)] [&>button]:px-[8px] [&>button]:py-[5px] [&>button]:ml-1 [&>button]:rounded-[10px]">
-                                            <button className="bg-green-600" onClick={() => {
+                                        <td className="[&>button]:btn">
+                                            <button className="green-btn" onClick={() => {
                                                 setIsShowDetailsModal(true)
                                                 setMainProductInfos(product);
                                             }}>جزئیات
                                             </button>
-                                            <button className="bg-red-500" onClick={() => {
+                                            <button className="red-btn" onClick={() => {
                                                 setIsShowDeleteModal(true)
                                                 setMainProductId(product.id)
                                             }}>حذف
                                             </button>
-                                            <button className="bg-[var(--blue)]" onClick={() => {
+                                            <button className="blue-btn" onClick={() => {
                                                 setIsShowEditModal(true);
                                                 setMainProductId(product.id);
                                                 // defaults value

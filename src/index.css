@@ -47,4 +47,20 @@
         background-color: rgba(0, 0, 0, 0.5);
     }
 
+    .btn {
+        @apply text-[var(--white)] px-[8px] py-[5px] ml-1 rounded-[10px]
+    }
+
+    .red-btn {
+        @apply bg-red-500
+    }
+
+    .blue-btn {
+        @apply bg-[var(--blue)]
+    }
+
+    .green-btn {
+        @apply bg-green-600
+    }
+
 }

@@ -69,10 +69,10 @@ export default function CommentsTable() {
                                     </td>
                                     <td>{comment.date}</td>
                                     <td>{comment.hour}</td>
-                                    <td className="[&>button]:text-[var(--white)] [&>button]:px-[8px] [&>button]:py-[5px] [&>button]:ml-1 [&>button]:rounded-[10px]">
-                                        <button className="bg-red-500">حذف</button>
-                                        <button className="bg-[var(--blue)]">پاسخ</button>
-                                        <button className="bg-green-600">تایید</button>
+                                    <td className="[&>button]:btn">
+                                        <button className="red-btn">حذف</button>
+                                        <button className="blue-btn">پاسخ</button>
+                                        <button className="green-btn">تایید</button>
                                     </td>
                                 </tr>
                             ))

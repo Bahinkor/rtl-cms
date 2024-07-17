@@ -3,11 +3,13 @@ import {toast} from "react-toastify";
 import Loading from "../Loading/Loading";
 import ErrorBox from "../ErrorBox/ErrorBox";
 import DetailsModal from "../DetailsModal/DetailsModal";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
 export default function CommentsTable() {
     //state
     const [allComments, setAllComments] = useState(null);
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
+    const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [mainCommentBody, setMainCommentBody] = useState("");
 
     //react-toastify package function
@@ -30,8 +32,11 @@ export default function CommentsTable() {
 
     }
 
-    const closeDetailsModal = () => {
-        setIsShowDetailsModal(false);
+    const closeDetailsModal = () => setIsShowDetailsModal(false);
+    const closeDeleteModal = () => setIsShowDeleteModal(false);
+
+    const deleteModalSubmitAction = () => {
+        setIsShowDeleteModal(false);
     }
 
     //useEffect
@@ -81,7 +86,8 @@ export default function CommentsTable() {
                                     <td>{comment.date}</td>
                                     <td>{comment.hour}</td>
                                     <td className="[&>button]:btn">
-                                        <button className="red-btn">حذف</button>
+                                        <button className="red-btn" onClick={() => setIsShowDeleteModal(true)}>حذف
+                                        </button>
                                         <button className="blue-btn">پاسخ</button>
                                         <button className="green-btn">تایید</button>
                                     </td>
@@ -98,12 +104,19 @@ export default function CommentsTable() {
 
             }
 
+            {/* Details Modal */}
             {
                 isShowDetailsModal && (
                     <DetailsModal onClose={closeDetailsModal}>
                         <p className="w-[400px] bg-[var(--white)] p-5">{mainCommentBody}</p>
                     </DetailsModal>
                 )
+            }
+
+            {/* Delete Modal */}
+            {
+                isShowDeleteModal &&
+                <DeleteModal cancelAction={closeDeleteModal} submitAction={deleteModalSubmitAction}/>
             }
 
         </>

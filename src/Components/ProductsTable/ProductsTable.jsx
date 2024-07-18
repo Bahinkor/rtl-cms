@@ -225,7 +225,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
             {
                 isShowEditModal && (
                     <EditModal
-                        onSubmit={editModalSubmitAction}
+                        submitAction={editModalSubmitAction}
                         onClose={editModalClose}
                     >
 

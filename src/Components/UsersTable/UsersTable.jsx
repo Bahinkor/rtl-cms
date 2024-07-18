@@ -161,7 +161,7 @@ export default function UsersTable() {
             {/* Edit Modal */}
             {
                 isShowEditModal && (
-                    <EditModal onClose={closeEditModal} onSubmit={editModalSubmitAction}>
+                    <EditModal submitAction={editModalSubmitAction} onClose={closeEditModal}>
 
                         <div className="flex flex-col items-start [&>label]:text-[var(--blue)]">
 

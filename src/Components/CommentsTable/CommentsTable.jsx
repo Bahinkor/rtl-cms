@@ -11,6 +11,7 @@ export default function CommentsTable() {
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [isShowAcceptModal, setIsShowAcceptModal] = useState(false);
+    const [isShowRejectModal, setIsShowRejectModal] = useState(false);
     const [mainCommentBody, setMainCommentBody] = useState("");
     const [mainCommentID, setMainCommentID] = useState(null);
 
@@ -49,6 +50,7 @@ export default function CommentsTable() {
     const closeDetailsModal = () => setIsShowDetailsModal(false);
     const closeDeleteModal = () => setIsShowDeleteModal(false);
     const closeAcceptModal = () => setIsShowAcceptModal(false);
+    const closeRejectModal = () => setIsShowRejectModal(false);
 
     const deleteModalSubmitAction = () => {
 
@@ -84,6 +86,10 @@ export default function CommentsTable() {
             })
 
         closeAcceptModal();
+    }
+
+    const rejectModalSubmitAction = () => {
+        closeRejectModal();
     }
 
     //useEffect
@@ -148,7 +154,8 @@ export default function CommentsTable() {
                                                 }}>تایید
                                                 </button>
                                             ) : (
-                                                <button className="bg-orange-500">لغو تایید</button>
+                                                <button className="bg-orange-500"
+                                                        onClick={() => setIsShowRejectModal(true)}>لغو تایید</button>
                                             )
                                         }
 
@@ -186,6 +193,12 @@ export default function CommentsTable() {
             {
                 isShowAcceptModal && <DeleteModal cancelAction={closeAcceptModal} submitAction={acceptModalSubmitAction}
                                                   title="آیا از تایید اطمینان دارید؟"/>
+            }
+
+            {/* Reject Modal */}
+            {
+                isShowRejectModal && <DeleteModal cancelAction={closeRejectModal} submitAction={rejectModalSubmitAction}
+                                                  title="آیا از لغو تایید اطمینان دارید؟"/>
             }
 
         </>

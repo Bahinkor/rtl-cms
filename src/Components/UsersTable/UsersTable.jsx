@@ -71,7 +71,38 @@ export default function UsersTable() {
         closeDeleteModal();
     }
 
-    const editModalSubmitAction = () => {
+    const editModalSubmitAction = async () => {
+
+        const newUserInfos = {
+            firsname: newUserFirstName,
+            lastname: newUserLastName,
+            username: newUserUsername,
+            password: newUserPassword,
+            phone: newUserPhone,
+            city: newUserCity,
+            email: newUserEmail,
+            address: newUserAddress,
+            score: newUserScore,
+            buy: newUserBuy
+        }
+
+        await fetch(`http://localhost:3000/api/users/${mainUserID}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUserInfos)
+        })
+            .then(res => res.json())
+            .then(data => {
+                successNotification();
+                getAllUsers();
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err);
+            })
+
         closeEditModal();
     }
 

@@ -191,7 +191,8 @@ export default function ProductsTable({allProducts, getAllProducts}) {
             {/* Delete modal component */}
             {
                 isShowDeleteModal &&
-                <DeleteModal cancelAction={deleteModalCancelAction} submitAction={deleteModalSubmitAction}/>
+                <DeleteModal cancelAction={deleteModalCancelAction} submitAction={deleteModalSubmitAction}
+                             title="آیا از حذف اطمینان دارید؟"/>
             }
 
             {/* Details modal component */}

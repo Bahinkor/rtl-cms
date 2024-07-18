@@ -10,6 +10,7 @@ export default function CommentsTable() {
     const [allComments, setAllComments] = useState(null);
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
+    const [isShowAcceptModal, setIsShowAcceptModal] = useState(false);
     const [mainCommentBody, setMainCommentBody] = useState("");
     const [mainCommentID, setMainCommentID] = useState(null);
 
@@ -41,6 +42,7 @@ export default function CommentsTable() {
 
     const closeDetailsModal = () => setIsShowDetailsModal(false);
     const closeDeleteModal = () => setIsShowDeleteModal(false);
+    const closeAcceptModal = () => setIsShowAcceptModal(false);
 
     const deleteModalSubmitAction = () => {
 
@@ -57,7 +59,11 @@ export default function CommentsTable() {
                 console.log(err)
             })
 
-        setIsShowDeleteModal(false);
+        closeDeleteModal();
+    }
+
+    const acceptModalSubmitAction = () => {
+        closeAcceptModal();
     }
 
     //useEffect
@@ -107,13 +113,14 @@ export default function CommentsTable() {
                                     <td>{comment.date}</td>
                                     <td>{comment.hour}</td>
                                     <td className="[&>button]:btn">
+                                        <button className="blue-btn">پاسخ</button>
                                         <button className="red-btn" onClick={() => {
                                             setMainCommentID(comment.id);
                                             setIsShowDeleteModal(true)
                                         }}>حذف
                                         </button>
-                                        <button className="blue-btn">پاسخ</button>
-                                        <button className="green-btn">تایید</button>
+                                        <button className="green-btn" onClick={() => setIsShowAcceptModal(true)}>تایید
+                                        </button>
                                     </td>
                                 </tr>
                             ))
@@ -140,7 +147,14 @@ export default function CommentsTable() {
             {/* Delete Modal */}
             {
                 isShowDeleteModal &&
-                <DeleteModal cancelAction={closeDeleteModal} submitAction={deleteModalSubmitAction}/>
+                <DeleteModal cancelAction={closeDeleteModal} submitAction={deleteModalSubmitAction}
+                             title="آیا از حذف اطمینان دارید؟"/>
+            }
+
+            {/* Accept Modal */}
+            {
+                isShowAcceptModal && <DeleteModal cancelAction={closeAcceptModal} submitAction={acceptModalSubmitAction}
+                                                  title="آیا از تایید اطمینان دازید؟"/>
             }
 
         </>

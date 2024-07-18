@@ -127,7 +127,7 @@ export default function CommentsTable() {
                         </tr>
                         </thead>
 
-                        {/* products list */}
+                        {/* Comments list */}
                         <tbody>
 
                         {

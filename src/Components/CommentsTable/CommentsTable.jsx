@@ -132,7 +132,7 @@ export default function CommentsTable() {
                                     </td>
                                     <td>{comment.date}</td>
                                     <td>{comment.hour}</td>
-                                    <td className="[&>button]:btn">
+                                    <td className="[&>button]:btn !p-[10px]">
                                         <button className="blue-btn">پاسخ</button>
                                         <button className="red-btn" onClick={() => {
                                             setMainCommentID(comment.id);
@@ -148,7 +148,7 @@ export default function CommentsTable() {
                                                 }}>تایید
                                                 </button>
                                             ) : (
-                                                <button className="bg-orange-500">تایید شده</button>
+                                                <button className="bg-orange-500">لغو تایید</button>
                                             )
                                         }
 

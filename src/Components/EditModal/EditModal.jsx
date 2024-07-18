@@ -7,7 +7,8 @@ export default function EditModal({onSubmit, onClose, children}) {
         <div
             className="fixed top-0 z-20 flex items-center justify-center size-full bg-black-05 opacity-0 invisible transition modal-active">
             <div>
-                <form className="w-[800px] bg-[var(--white)] text-center p-[30px] rounded-xl">
+                <form className="w-[800px] bg-[var(--white)] text-center p-[30px] rounded-xl"
+                      onSubmit={(e) => e.preventDefault()}>
                     <h2 className="text-[1.4rem]">اطلاعات جدید را وارد نمایید</h2>
 
                     <div className="grid grid-cols-2 gap-5">

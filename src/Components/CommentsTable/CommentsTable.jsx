@@ -16,13 +16,7 @@ export default function CommentsTable() {
     const [mainCommentID, setMainCommentID] = useState(null);
 
     //react-toastify package function
-    const successNotification = () => toast.success("کامنت با موفقیت خذف شد.", {
-        rtl: true,
-        pauseOnHover: false,
-        autoClose: 3000,
-    });
-
-    const successAcceptCommentNotification = () => toast.success("کامنت با موفقیت تایید شد.", {
+    const successNotification = () => toast.success("عملیات موفقیت آمیز بود.", {
         rtl: true,
         pauseOnHover: false,
         autoClose: 3000,
@@ -77,7 +71,7 @@ export default function CommentsTable() {
         })
             .then(res => res.json())
             .then(data => {
-                successAcceptCommentNotification();
+                successNotification();
                 getAllComments();
             })
             .catch(err => {
@@ -89,6 +83,20 @@ export default function CommentsTable() {
     }
 
     const rejectModalSubmitAction = () => {
+
+        fetch(`http://localhost:3000/api/comments/reject/${mainCommentID}`, {
+            method: "POST"
+        })
+            .then(res => res.json())
+            .then(data => {
+                successNotification();
+                getAllComments();
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err)
+            })
+
         closeRejectModal();
     }
 
@@ -155,7 +163,10 @@ export default function CommentsTable() {
                                                 </button>
                                             ) : (
                                                 <button className="bg-orange-500"
-                                                        onClick={() => setIsShowRejectModal(true)}>لغو تایید</button>
+                                                        onClick={() => {
+                                                            setMainCommentID(comment.id);
+                                                            setIsShowRejectModal(true)
+                                                        }}>لغو تایید</button>
                                             )
                                         }
 

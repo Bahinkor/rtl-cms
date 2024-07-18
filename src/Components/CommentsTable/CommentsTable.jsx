@@ -21,6 +21,12 @@ export default function CommentsTable() {
         autoClose: 3000,
     });
 
+    const successAcceptCommentNotification = () => toast.success("کامنت با موفقیت تایید شد.", {
+        rtl: true,
+        pauseOnHover: false,
+        autoClose: 3000,
+    });
+
     const errorNotification = () => toast.error("اوه، با خطا مواجه شدیم!", {
         rtl: true,
         pauseOnHover: false,
@@ -63,6 +69,20 @@ export default function CommentsTable() {
     }
 
     const acceptModalSubmitAction = () => {
+
+        fetch(`http://localhost:3000/api/comments/accept/${mainCommentID}`, {
+            method: "POST",
+        })
+            .then(res => res.json())
+            .then(data => {
+                successAcceptCommentNotification();
+                getAllComments();
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err)
+            })
+
         closeAcceptModal();
     }
 
@@ -119,8 +139,19 @@ export default function CommentsTable() {
                                             setIsShowDeleteModal(true)
                                         }}>حذف
                                         </button>
-                                        <button className="green-btn" onClick={() => setIsShowAcceptModal(true)}>تایید
-                                        </button>
+
+                                        {
+                                            comment.isAccept === 0 ? (
+                                                <button className="green-btn" onClick={() => {
+                                                    setMainCommentID(comment.id);
+                                                    setIsShowAcceptModal(true)
+                                                }}>تایید
+                                                </button>
+                                            ) : (
+                                                <button className="bg-orange-500">تایید شده</button>
+                                            )
+                                        }
+
                                     </td>
                                 </tr>
                             ))
@@ -154,7 +185,7 @@ export default function CommentsTable() {
             {/* Accept Modal */}
             {
                 isShowAcceptModal && <DeleteModal cancelAction={closeAcceptModal} submitAction={acceptModalSubmitAction}
-                                                  title="آیا از تایید اطمینان دازید؟"/>
+                                                  title="آیا از تایید اطمینان دارید؟"/>
             }
 
         </>

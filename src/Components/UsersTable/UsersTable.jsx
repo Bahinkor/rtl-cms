@@ -16,6 +16,17 @@ export default function UsersTable() {
     const [isShowEditModal, setIsShowEditModal] = useState(false);
     const [mainUserID, setMainUserID] = useState(null);
 
+    const [newUserFirstName, setNewUserFirstName] = useState("");
+    const [newUserLastName, setNewUserLastName] = useState("");
+    const [newUserUsername, setNewUserUsername] = useState("");
+    const [newUserPassword, setNewUserPassword] = useState("");
+    const [newUserPhone, setNewUserPhone] = useState("");
+    const [newUserCity, setNewUserCity] = useState("");
+    const [newUserEmail, setNewUserEmail] = useState("");
+    const [newUserAddress, setNewUserAddress] = useState("");
+    const [newUserScore, setNewUserScore] = useState("");
+    const [newUserBuy, setNewUserBuy] = useState("");
+
     //react-toastify package function
     const successNotification = () => toast.success("عملیات موفقیت آمیز بود.", {
         rtl: true,
@@ -62,6 +73,19 @@ export default function UsersTable() {
 
     const editModalSubmitAction = () => {
         closeEditModal();
+    }
+
+    const updateEditModalItems = (user) => {
+        setNewUserFirstName(user.firsname);
+        setNewUserLastName(user.lastname);
+        setNewUserUsername(user.username);
+        setNewUserPassword(user.password);
+        setNewUserPhone(user.phone);
+        setNewUserCity(user.city);
+        setNewUserEmail(user.email);
+        setNewUserAddress(user.address);
+        setNewUserScore(user.username);
+        setNewUserBuy(user.buy);
     }
 
     //useEffect
@@ -112,6 +136,7 @@ export default function UsersTable() {
                                         <button className="green-btn" onClick={() => {
                                             setMainUserID(user.id);
                                             setIsShowEditModal(true);
+                                            updateEditModalItems(user);
                                         }}>ویرایش
                                         </button>
                                     </td>
@@ -147,8 +172,8 @@ export default function UsersTable() {
                             <span>
                                 <MdOutlineProductionQuantityLimits/>
                             </span>
-                                <input type="text" placeholder="نام جدید را وارد کنید" value={productNewTitle}
-                                       onChange={e => setProductNewTitle(e.target.value)}
+                                <input type="text" placeholder="نام جدید را وارد کنید" value={newUserFirstName}
+                                       onChange={e => setNewUserFirstName(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-title-input"/>
                             </div>
@@ -164,8 +189,8 @@ export default function UsersTable() {
                             <span>
                                 <AiOutlineDollarCircle/>
                             </span>
-                                <input type="text" placeholder="نام خانوادگی جدید را وارد کنید" value={productNewPrice}
-                                       onChange={e => setProductNewPrice(e.target.value)}
+                                <input type="text" placeholder="نام خانوادگی جدید را وارد کنید" value={newUserLastName}
+                                       onChange={e => setNewUserLastName(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-price-input"/>
                             </div>
@@ -181,8 +206,8 @@ export default function UsersTable() {
                             <span>
                                 <TbRosetteDiscountCheckFilled/>
                             </span>
-                                <input type="text" placeholder="یوزرنیم جدید را وارد کنید" value={productNewCount}
-                                       onChange={e => setProductNewCount(e.target.value)}
+                                <input type="text" placeholder="یوزرنیم جدید را وارد کنید" value={newUserUsername}
+                                       onChange={e => setNewUserUsername(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-count-input"/>
                             </div>
@@ -198,8 +223,8 @@ export default function UsersTable() {
                             <span>
                                 <FaImage/>
                             </span>
-                                <input type="text" placeholder="پسورد جدید را وارد کنید" value={productNewImage}
-                                       onChange={e => setProductNewImage(e.target.value)}
+                                <input type="text" placeholder="پسورد جدید را وارد کنید" value={newUserPassword}
+                                       onChange={e => setNewUserPassword(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-image-input"/>
                             </div>
@@ -215,8 +240,8 @@ export default function UsersTable() {
                             <span>
                                 <FaFire/>
                             </span>
-                                <input type="text" placeholder="شماره تماس جدید را وارد کنید" value={productNewPopularity}
-                                       onChange={e => setProductNewPopularity(e.target.value)}
+                                <input type="text" placeholder="شماره تماس جدید را وارد کنید" value={newUserPhone}
+                                       onChange={e => setNewUserPhone(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-popularity-input"/>
                             </div>
@@ -232,8 +257,8 @@ export default function UsersTable() {
                             <span>
                                 <FaSellcast/>
                             </span>
-                                <input type="text" placeholder="شهر را وارد کنید" value={productNewSale}
-                                       onChange={e => setProductNewSale(e.target.value)}
+                                <input type="text" placeholder="شهر را وارد کنید" value={newUserCity}
+                                       onChange={e => setNewUserCity(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-sale-input"/>
                             </div>
@@ -249,8 +274,8 @@ export default function UsersTable() {
                             <span>
                                 <MdInvertColors/>
                             </span>
-                                <input type="text" placeholder="ایمیل را وارد کنید" value={productNewColors}
-                                       onChange={e => setProductNewColors(e.target.value)}
+                                <input type="text" placeholder="ایمیل را وارد کنید" value={newUserEmail}
+                                       onChange={e => setNewUserEmail(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-colors-input"/>
                             </div>
@@ -268,8 +293,8 @@ export default function UsersTable() {
                             <span>
                                 <MdInvertColors/>
                             </span>
-                                <input type="text" placeholder="آدرس را وارد کنید" value={productNewColors}
-                                       onChange={e => setProductNewColors(e.target.value)}
+                                <input type="text" placeholder="آدرس را وارد کنید" value={newUserAddress}
+                                       onChange={e => setNewUserAddress(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-colors-input"/>
                             </div>
@@ -287,8 +312,8 @@ export default function UsersTable() {
                             <span>
                                 <MdInvertColors/>
                             </span>
-                                <input type="text" placeholder="امتیاز را وارد کنید" value={productNewColors}
-                                       onChange={e => setProductNewColors(e.target.value)}
+                                <input type="text" placeholder="امتیاز را وارد کنید" value={newUserScore}
+                                       onChange={e => setNewUserScore(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-colors-input"/>
                             </div>
@@ -306,8 +331,8 @@ export default function UsersTable() {
                             <span>
                                 <MdInvertColors/>
                             </span>
-                                <input type="text" placeholder="میزان خرید را وارد کنید" value={productNewColors}
-                                       onChange={e => setProductNewColors(e.target.value)}
+                                <input type="text" placeholder="میزان خرید را وارد کنید" value={newUserBuy}
+                                       onChange={e => setNewUserBuy(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-colors-input"/>
                             </div>

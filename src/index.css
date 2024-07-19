@@ -30,7 +30,8 @@
         height: 100vh;
     }
 
-    .sidebar-active-item {
+    .sidebar-active-item,
+    a.active {
         background-color: #391588;
     }
 

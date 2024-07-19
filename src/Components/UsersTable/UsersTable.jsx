@@ -3,17 +3,21 @@ import ErrorBox from "../ErrorBox/ErrorBox";
 import Loading from "../Loading/Loading";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import EditModal from "../EditModal/EditModal";
+import DetailModal from "../DetailsModal/DetailsModal";
 import {toast} from "react-toastify";
 import {MdInvertColors, MdOutlineProductionQuantityLimits} from "react-icons/md";
 import {AiOutlineDollarCircle} from "react-icons/ai";
 import {TbRosetteDiscountCheckFilled} from "react-icons/tb";
 import {FaFire, FaImage, FaSellcast} from "react-icons/fa";
+import DetailsModal from "../DetailsModal/DetailsModal";
 
 export default function UsersTable() {
     //state
     const [allUsers, setAllUsers] = useState(null);
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [isShowEditModal, setIsShowEditModal] = useState(false);
+    const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
+    const [mainUserDetailInfos, setMainUserDetailInfos] = useState({});
     const [mainUserID, setMainUserID] = useState(null);
 
     const [newUserFirstName, setNewUserFirstName] = useState("");
@@ -52,6 +56,7 @@ export default function UsersTable() {
 
     const closeDeleteModal = () => setIsShowDeleteModal(false);
     const closeEditModal = () => setIsShowEditModal(false);
+    const closeDetailsModal = () => setIsShowDetailsModal(false);
 
     const deleteModalSubmitAction = () => {
 
@@ -158,10 +163,14 @@ export default function UsersTable() {
                                     <td>{user.phone}</td>
                                     <td>{user.email}</td>
                                     <td className="[&>button]:btn !p-[5px]">
-                                        <button className="blue-btn">جزئیات</button>
+                                        <button className="blue-btn" onClick={() => {
+                                            setIsShowDetailsModal(true);
+                                            setMainUserDetailInfos(user);
+                                        }}>جزئیات
+                                        </button>
                                         <button className="red-btn" onClick={() => {
                                             setMainUserID(user.id);
-                                            setIsShowDeleteModal(true)
+                                            setIsShowDeleteModal(true);
                                         }}>حذف
                                         </button>
                                         <button className="green-btn" onClick={() => {
@@ -187,6 +196,35 @@ export default function UsersTable() {
             {
                 isShowDeleteModal && <DeleteModal cancelAction={closeDeleteModal} submitAction={deleteModalSubmitAction}
                                                   title="آیا از حذف مطمئن هستید؟"/>
+            }
+
+            {/* Details Modal */}
+            {
+                isShowDetailsModal && (
+                    <DetailsModal onClose={closeDetailsModal}>
+                        <table className="w-full bg-[var(--white)] mt-5 rounded-[10px]">
+
+                            <thead>
+                            <tr className="text-center [&>*]:p-5">
+                                <th>شهر</th>
+                                <th>آدرس</th>
+                                <th>امتیاز</th>
+                                <th>میزان خرید</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr className="text-center [&>*]:p-5">
+                                <td>{mainUserDetailInfos.city}</td>
+                                <td>{mainUserDetailInfos.address}</td>
+                                <td>{mainUserDetailInfos.score}</td>
+                                <td>{mainUserDetailInfos.buy.toLocaleString()} تومان</td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </DetailsModal>
+                )
             }
 
             {/* Edit Modal */}

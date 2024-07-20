@@ -33,7 +33,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
     const [productNewTitle, setProductNewTitle] = useState("");
     const [productNewPrice, setProductNewPrice] = useState("");
     const [productNewCount, setProductNewCount] = useState("");
-    const [productNewImage, setProductNewImage] = useState("");
+    const [productNewImage, setProductNewImage] = useState(null);
     const [productNewPopularity, setProductNewPopularity] = useState("");
     const [productNewSale, setProductNewSale] = useState("");
     const [productNewColors, setProductNewColors] = useState("");
@@ -82,28 +82,31 @@ export default function ProductsTable({allProducts, getAllProducts}) {
 
     const editModalSubmitAction = (e) => {
         e.preventDefault();
-        
-        const productNewInfos = {
-            title: productNewTitle,
-            price: productNewPrice,
-            count: productNewCount,
-            img: productNewImage,
-            popularity: productNewPopularity,
-            sale: productNewSale,
-            colors: productNewColors,
-        }
 
-        fetch(`http://localhost:3000/api/products/${mainProductId}`, {
+        const productNewInfos = new FormData();
+        productNewInfos.append("title", productNewTitle);
+        productNewInfos.append("price", productNewPrice);
+        productNewInfos.append("count", productNewCount);
+        productNewInfos.append("image", productNewImage);
+        productNewInfos.append("popularity", productNewPopularity);
+        productNewInfos.append("sale_amount", productNewSale);
+        productNewInfos.append("colors", productNewColors);
+
+        fetch(`http://localhost:8000/products/update/${mainProductId}/`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json",
+                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
             },
-            body: JSON.stringify(productNewInfos)
+            body: productNewInfos,
         })
-            .then(res => res.json())
-            .then(data => {
-                successPutNotification();
-                getAllProducts();
+            .then(res => {
+                if (res.ok) {
+                    successPutNotification();
+                    getAllProducts();
+                } else {
+                    errorNotification();
+                    console.log(res);
+                }
             })
             .catch(err => {
                 errorNotification();
@@ -122,7 +125,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
         setProductNewTitle(product.title);
         setProductNewPrice(product.price);
         setProductNewCount(product.count);
-        setProductNewImage(product.img);
+        setProductNewImage(product.image);
         setProductNewPopularity(product.popularity);
         setProductNewSale(product.sale_amount);
         setProductNewColors(product.colors);
@@ -291,15 +294,14 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                         {/*  */}
                         <div className="flex flex-col items-start [&>label]:text-[var(--blue)]">
 
-                            <label htmlFor="#edit-image-input">کاور محصول:</label>
+                            <label htmlFor="#edit-image-input">کاور محصول: *الزامی</label>
                             <div
                                 className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-1 rounded-[10px]">
 
                             <span>
                                 <FaImage/>
                             </span>
-                                <input type="text" placeholder="کاور جدید را وارد کنید" value={productNewImage}
-                                       onChange={e => setProductNewImage(e.target.value)}
+                                <input type="file" onChange={e => setProductNewImage(e.target.files[0])}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-image-input"/>
                             </div>

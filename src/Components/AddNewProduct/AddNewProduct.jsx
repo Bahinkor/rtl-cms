@@ -45,23 +45,27 @@ export default function AddNewProduct({getAllProducts}) {
             title: newProductTitle,
             price: newProductPrice,
             count: newProductCount,
-            img: newProductImage,
+            image: newProductImage,
             popularity: newProductPopularity,
-            sale: newProductSale,
+            sale_amount: newProductSale,
             colors: newProductColors,
         }
 
-        fetch("http://localhost:3000/api/products/", {
+        fetch("http://localhost:8000/products/add/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
             },
             body: JSON.stringify(newProductInfos)
         })
             .then(res => res.json())
             .then(data => {
-                successNotification();
-                getAllProducts();
+                if (data.ok) {
+                    successNotification();
+                    getAllProducts();
+                }
+                console.log(data)
                 clearInputValues();
             })
             .catch(err => {
@@ -76,12 +80,12 @@ export default function AddNewProduct({getAllProducts}) {
     //JSX
     return (
         <div className="mt-[60px]">
-            <h2 className="text-[2rem]">افزودن محصول جدید</h2>
+            <h2 className="text-[2rem] dark:text-slate-200">افزودن محصول جدید</h2>
 
-            <form className="flex flex-col items-end bg-[var(--white)] p-5 mt-[30px] rounded-[20px]"
+            <form className="flex flex-col items-end bg-[var(--white)] dark:bg-slate-800 p-5 mt-[30px] rounded-[20px]"
                   onSubmit={e => e.preventDefault()}>
                 <div
-                    className="grid grid-cols-2 gap-y-[10px] gap-x-[15px] w-full [&>div]:flex [&>div]:items-center [&>div]:gap-y-[10px] [&>div]:w-full [&>div]:bg-[#f4f4f4] [&>div]:px-5 [&>div]:rounded-[10px]">
+                    className="grid grid-cols-2 gap-y-[10px] gap-x-[15px] w-full [&>div]:flex [&>div]:items-center [&>div]:gap-y-[10px] [&>div]:w-full [&>div]:bg-[#f4f4f4] [&>div]:dark:bg-slate-600 [&>div]:dark:text-slate-200 [&>div]:px-5 [&>div]:rounded-[10px]">
                     {/* form inputs */}
 
                     <div>
@@ -142,7 +146,7 @@ export default function AddNewProduct({getAllProducts}) {
 
                 </div>
                 <button
-                    className="text-[1.1rem] text-[var(--white)] bg-[var(--blue)] py-[10px] px-5 mt-[10px] rounded-[10px]"
+                    className="text-[1.1rem] text-[var(--white)] dark:text-slate-200 bg-[var(--blue)] py-[10px] px-5 mt-[10px] rounded-[10px]"
                     onClick={addNewProduct}>
                     ثبت محصول
                 </button>

@@ -116,7 +116,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
         setProductNewCount(product.count);
         setProductNewImage(product.img);
         setProductNewPopularity(product.popularity);
-        setProductNewSale(product.sale);
+        setProductNewSale(product.sale_amount);
         setProductNewColors(product.colors);
     }
 
@@ -130,7 +130,8 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                     <Loading/>
                 ) : allProducts.length ? (
                     <>
-                        <table className="w-full bg-[var(--white)] mt-[30px] rounded-[10px]">
+                        <table
+                            className="w-full bg-[var(--white)] dark:bg-slate-800 mt-[30px] dark:text-slate-200 rounded-[10px]">
                             {/* table header */}
                             <thead>
                             <tr className="flex items-center w-full text-center py-5 [&>*]:w-full">
@@ -147,10 +148,10 @@ export default function ProductsTable({allProducts, getAllProducts}) {
 
                             {
                                 allProducts.map(product => (
-                                    <tr key={product.id}
+                                    <tr key={product.product_code}
                                         className="flex items-center w-full [&>td]:flex [&>td]:justify-center [&>td]:items-center [&>td]:w-full [&>td]:text-center [&>td]:p-5">
                                         <td>
-                                            <img src={product.img} alt="product image"
+                                            <img src={product.image} alt="product image"
                                                  className="w-[150px] rounded-[10px] object-cover"/>
                                         </td>
                                         <td>{product.title}</td>
@@ -212,7 +213,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                         <tbody>
                         <tr className="text-center [&>*]:p-5">
                             <td>{mainProductInfos.popularity}%</td>
-                            <td>{mainProductInfos.sale.toLocaleString()} تومان</td>
+                            <td>{mainProductInfos.sale_amount} تومان</td>
                             <td>{mainProductInfos.colors}</td>
                         </tr>
                         </tbody>

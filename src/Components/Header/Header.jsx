@@ -50,7 +50,7 @@ export default function Header() {
                 <div className="flex items-center gap-5">
                     <img src="/images/admin-profile01.jpg" alt="admin profile" className="w-[50px] rounded-full"/>
                     <div className="flex flex-col">
-                        <h2 className="text-[1.2rem]">محمدرضا بهین کر</h2>
+                        <h2 className="text-[1.2rem] dark:text-slate-200">محمدرضا بهین کر</h2>
                         <h3 className="text-[#858585]">برنامه نویس</h3>
                     </div>
                 </div>
@@ -60,11 +60,11 @@ export default function Header() {
                     {/* search box */}
                     {/* search-box-shadow is custom class */}
                     <div
-                        className="flex items-center justify-between w-[400px] h-[45px] bg-[var(--white)] pl-[5px] rounded-[15px] overflow-hidden search-box-shadow">
+                        className="flex items-center justify-between w-[400px] h-[45px] bg-[var(--white)] dark:bg-slate-600 pl-[5px] rounded-[15px] overflow-hidden search-box-shadow">
                         <input type="text" placeholder="جستجو کنید..."
-                               className="w-full text-[1.1rem] py-[10px] pl-[10px] pr-[20px] outline-none focus:outline-none"/>
+                               className="w-full dark:bg-slate-600 dark:text-slate-200 text-[1.1rem] py-[10px] pl-[10px] pr-[20px] outline-none focus:outline-none"/>
                         <button
-                            className="flex w-[100px] bg-[var(--blue)] text-[1.1rem] text-[var(--white)] py-[3px] px-[20px] rounded-[10px]">جستجو
+                            className="flex w-[100px] bg-[var(--blue)] dark:text-slate-200 text-[1.1rem] text-[var(--white)] py-[3px] px-[20px] rounded-[10px]">جستجو
                         </button>
                     </div>
 

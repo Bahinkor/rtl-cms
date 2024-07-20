@@ -10,7 +10,7 @@ export default function SideBar() {
 
     // JSX
     return (
-        <div className="flex-1 fixed h-full bg-[var(--blue)]">
+        <div className="flex-1 fixed h-full bg-[var(--blue)] dark:text-slate-200">
             <h1 className="text-[1.4rem] text-[var(--white)] p-[15px] border-b border-solid border-[#6c48bb]">به داشبورد
                 خود خوش آمدید</h1>
 

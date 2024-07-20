@@ -7,9 +7,6 @@ import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Products() {
-    //react-toastify package variables
-    const errorNotification = () => toast.error("!اوه، با خطا مواجه شدیم");
-
     //state (all products)
     const [allProducts, setAllProducts] = useState(null);
 
@@ -18,7 +15,7 @@ export default function Products() {
         await fetch("http://localhost:8000/products/", {
             method: "GET",
             headers: {
-                "Authorization": "Token 8e52e9e5ed505d8e8e8d4dc6423ba893214a1efb",
+                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
             }
         })
             .then(res => res.json())

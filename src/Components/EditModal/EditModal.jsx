@@ -7,16 +7,17 @@ export default function EditModal({submitAction, onClose, children}) {
         <div
             className="fixed top-0 z-20 flex items-center justify-center size-full bg-black-05 opacity-0 invisible transition modal-active">
             <div>
-                <form className="w-[800px] bg-[var(--white)] text-center p-[30px] rounded-xl"
+                <form className="w-[800px] bg-[var(--white)] dark:bg-slate-700 text-center p-[30px] rounded-xl"
                       onSubmit={e => e.preventDefault()}
                       onKeyPress={e => {
                           if (e.key === "Enter") {
                               e.preventDefault();
                           }
                       }}>
-                    <h2 className="text-[1.4rem]">اطلاعات جدید را وارد نمایید</h2>
+                    <h2 className="text-[1.4rem] dark:text-slate-200">اطلاعات جدید را وارد نمایید</h2>
 
-                    <div className="grid grid-cols-2 gap-5">
+                    <div
+                        className="grid grid-cols-2 gap-5 [&>div>label]:dark:text-cyan-600 [&>div>div]:dark:bg-slate-600 [&>div>div]:dark:text-slate-200">
                         {children}
                     </div>
 

@@ -6,7 +6,8 @@ export default function DetailsModal({onClose, children}) {
     return ReactDOM.createPortal(
         <div
             className="fixed top-0 z-20 flex items-center justify-center size-full bg-black-05 opacity-0 invisible transition modal-active">
-            <div className="flex flex-col bg-[var(--white)] text-[1.3rem] p-[30px] rounded-xl">
+            <div
+                className="flex flex-col bg-[var(--white)] dark:bg-slate-700 [&>*]:dark:text-slate-200 [&>table]:dark:!bg-slate-700 text-[1.3rem] p-[30px] rounded-xl">
 
                 {children}
 

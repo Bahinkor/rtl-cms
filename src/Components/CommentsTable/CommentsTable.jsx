@@ -31,7 +31,11 @@ export default function CommentsTable() {
     //function
     const getAllComments = () => {
 
-        fetch("http://localhost:3000/api/comments/")
+        fetch("http://localhost:8000/comments/", {
+            headers: {
+                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+            }
+        })
             .then(res => res.json())
             .then(data => setAllComments(data))
             .catch(err => {
@@ -48,13 +52,20 @@ export default function CommentsTable() {
 
     const deleteModalSubmitAction = () => {
 
-        fetch(`http://localhost:3000/api/comments/${mainCommentID}`, {
+        fetch(`http://localhost:8000/comments/delete/${mainCommentID}`, {
             method: "DELETE",
+            headers: {
+                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+            }
         })
-            .then(res => res.json())
-            .then(data => {
-                successNotification();
-                getAllComments();
+            .then(res => {
+                if (res.ok) {
+                    successNotification();
+                    getAllComments();
+                } else {
+                    errorNotification();
+                    console.log(res)
+                }
             })
             .catch(err => {
                 errorNotification();
@@ -66,36 +77,36 @@ export default function CommentsTable() {
 
     const acceptModalSubmitAction = () => {
 
-        fetch(`http://localhost:3000/api/comments/accept/${mainCommentID}`, {
-            method: "POST",
-        })
-            .then(res => res.json())
-            .then(data => {
-                successNotification();
-                getAllComments();
-            })
-            .catch(err => {
-                errorNotification();
-                console.log(err)
-            })
+        // fetch(`http://localhost:3000/api/comments/accept/${mainCommentID}`, {
+        //     method: "POST",
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         successNotification();
+        //         getAllComments();
+        //     })
+        //     .catch(err => {
+        //         errorNotification();
+        //         console.log(err)
+        //     })
 
         closeAcceptModal();
     }
 
     const rejectModalSubmitAction = () => {
 
-        fetch(`http://localhost:3000/api/comments/reject/${mainCommentID}`, {
-            method: "POST"
-        })
-            .then(res => res.json())
-            .then(data => {
-                successNotification();
-                getAllComments();
-            })
-            .catch(err => {
-                errorNotification();
-                console.log(err)
-            })
+        // fetch(`http://localhost:3000/api/comments/reject/${mainCommentID}`, {
+        //     method: "POST"
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         successNotification();
+        //         getAllComments();
+        //     })
+        //     .catch(err => {
+        //         errorNotification();
+        //         console.log(err)
+        //     })
 
         closeRejectModal();
     }
@@ -114,7 +125,8 @@ export default function CommentsTable() {
                     <Loading/>
                 ) : allComments.length ? (
 
-                    <table className="w-full bg-[var(--white)] mt-[30px] rounded-[10px]">
+                    <table
+                        className="w-full bg-[var(--white)] dark:bg-slate-800 dark:text-slate-200 mt-[30px] rounded-[10px]">
                         {/* table header */}
                         <thead>
                         <tr className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
@@ -134,12 +146,12 @@ export default function CommentsTable() {
                             allComments.map(comment => (
                                 <tr
                                     className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5"
-                                    key={comment.id}>
-                                    <td>{comment.userID}</td>
+                                    key={comment.comment_code}>
+                                    <td>{comment.user.username}</td>
                                     <td>{comment.productID}</td>
                                     <td className="[&>button]:bg-[var(--blue)] [&>button]:text-[var(--white)] [&>button]:px-[8px] [&>button]:py-[5px] [&>button]:rounded-[10px]">
                                         <button onClick={() => {
-                                            setMainCommentBody(comment.body);
+                                            setMainCommentBody(comment.content);
                                             setIsShowDetailsModal(true)
                                         }}>نمایش
                                         </button>
@@ -149,7 +161,7 @@ export default function CommentsTable() {
                                     <td className="[&>button]:btn !p-[10px]">
                                         <button className="blue-btn">پاسخ</button>
                                         <button className="red-btn" onClick={() => {
-                                            setMainCommentID(comment.id);
+                                            setMainCommentID(comment.comment_code);
                                             setIsShowDeleteModal(true)
                                         }}>حذف
                                         </button>
@@ -188,7 +200,7 @@ export default function CommentsTable() {
             {
                 isShowDetailsModal && (
                     <DetailsModal onClose={closeDetailsModal}>
-                        <p className="w-[400px] bg-[var(--white)] p-5">{mainCommentBody}</p>
+                        <p className="w-[400px] bg-[var(--white)] dark:bg-slate-700 dark:text-slate-200 p-5">{mainCommentBody}</p>
                     </DetailsModal>
                 )
             }

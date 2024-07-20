@@ -23,7 +23,7 @@ export default function AddNewProduct({getAllProducts}) {
     const [newProductTitle, setNewProductTitle] = useState("");
     const [newProductPrice, setNewProductPrice] = useState("");
     const [newProductCount, setNewProductCount] = useState("");
-    const [newProductImage, setNewProductImage] = useState("");
+    const [newProductImage, setNewProductImage] = useState(null);
     const [newProductPopularity, setNewProductPopularity] = useState("");
     const [newProductSale, setNewProductSale] = useState("");
     const [newProductColors, setNewProductColors] = useState("");
@@ -41,32 +41,32 @@ export default function AddNewProduct({getAllProducts}) {
 
     const addNewProduct = () => {
 
-        const newProductInfos = {
-            title: newProductTitle,
-            price: newProductPrice,
-            count: newProductCount,
-            image: newProductImage,
-            popularity: newProductPopularity,
-            sale_amount: newProductSale,
-            colors: newProductColors,
-        }
+        const newProductInfos = new FormData();
+        newProductInfos.append("title", newProductTitle);
+        newProductInfos.append("price", newProductPrice);
+        newProductInfos.append("count", newProductCount);
+        newProductInfos.append("image", newProductImage);
+        newProductInfos.append("popularity", newProductPopularity);
+        newProductInfos.append("sale_amount", newProductSale);
+        newProductInfos.append("colors", newProductColors);
 
         fetch("http://localhost:8000/products/add/", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
                 "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
             },
-            body: JSON.stringify(newProductInfos)
+            body: newProductInfos
         })
-            .then(res => res.json())
-            .then(data => {
-                if (data.ok) {
+            .then(res => {
+                if (res.ok) {
                     successNotification();
                     getAllProducts();
+                    clearInputValues();
+                } else {
+                    errorNotification();
+                    console.log(res);
+                    clearInputValues();
                 }
-                console.log(data)
-                clearInputValues();
             })
             .catch(err => {
                 errorNotification();
@@ -114,9 +114,7 @@ export default function AddNewProduct({getAllProducts}) {
                     {/*  */}
                     <div>
                         <FaImage/>
-                        <input type="text" placeholder="آدرس عکس محصول را بنویسید"
-                               value={newProductImage}
-                               onChange={e => setNewProductImage(e.target.value)}
+                        <input type="file" onChange={e => setNewProductImage(e.target.files[0])}
                                className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"/>
                     </div>
                     {/*  */}

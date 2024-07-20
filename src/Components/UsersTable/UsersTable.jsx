@@ -47,7 +47,11 @@ export default function UsersTable() {
     //function
     const getAllUsers = async () => {
 
-        await fetch("http://localhost:3000/api/users/")
+        await fetch("http://localhost:8000/users/", {
+            headers: {
+                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+            }
+        })
             .then(res => res.json())
             .then(data => setAllUsers(data))
             .catch(err => console.log(err));
@@ -60,13 +64,20 @@ export default function UsersTable() {
 
     const deleteModalSubmitAction = () => {
 
-        fetch(`http://localhost:3000/api/users/${mainUserID}`, {
+        fetch(`http://localhost:8000/users/delete/${mainUserID}/`, {
             method: "DELETE",
+            headers: {
+                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+            }
         })
-            .then(res => res.json())
-            .then(data => {
-                successNotification();
-                getAllUsers();
+            .then(res => {
+                if (res.ok) {
+                    successNotification();
+                    getAllUsers();
+                } else {
+                    errorNotification();
+                    console.log(res);
+                }
             })
             .catch(err => {
                 errorNotification();
@@ -78,30 +89,33 @@ export default function UsersTable() {
 
     const editModalSubmitAction = async () => {
 
-        const newUserInfos = {
-            firsname: newUserFirstName,
-            lastname: newUserLastName,
-            username: newUserUsername,
-            password: newUserPassword,
-            phone: newUserPhone,
-            city: newUserCity,
-            email: newUserEmail,
-            address: newUserAddress,
-            score: newUserScore,
-            buy: newUserBuy
-        }
+        const newUserInfos = new FormData();
+        newUserInfos.append("username", newUserUsername);
+        newUserInfos.append("first_name", newUserFirstName);
+        newUserInfos.append("last_name", newUserLastName);
+        newUserInfos.append("phone", newUserPhone);
+        newUserInfos.append("city", newUserCity);
+        newUserInfos.append("email", newUserEmail);
+        newUserInfos.append("address", newUserAddress);
+        newUserInfos.append("score", newUserScore);
+        newUserInfos.append("buy", newUserBuy);
+        newUserInfos.append("user_code", mainUserID);
 
-        await fetch(`http://localhost:3000/api/users/${mainUserID}`, {
+        await fetch(`http://localhost:8000/users/update/${mainUserID}/`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json",
+                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
             },
-            body: JSON.stringify(newUserInfos)
+            body: newUserInfos
         })
-            .then(res => res.json())
-            .then(data => {
-                successNotification();
-                getAllUsers();
+            .then(res => {
+                if (res.ok) {
+                    successNotification();
+                    getAllUsers();
+                } else {
+                    errorNotification();
+                    console.log(res);
+                }
             })
             .catch(err => {
                 errorNotification();
@@ -112,10 +126,9 @@ export default function UsersTable() {
     }
 
     const updateEditModalItems = (user) => {
-        setNewUserFirstName(user.firsname);
-        setNewUserLastName(user.lastname);
+        setNewUserFirstName(user.first_name);
+        setNewUserLastName(user.last_name);
         setNewUserUsername(user.username);
-        setNewUserPassword(user.password);
         setNewUserPhone(user.phone);
         setNewUserCity(user.city);
         setNewUserEmail(user.email);
@@ -137,13 +150,14 @@ export default function UsersTable() {
                 allUsers === null ? (
                     <Loading/>
                 ) : allUsers.length ? (
-                    < table className="w-full bg-[var(--white)] mt-[30px] rounded-[10px]">
+                    < table
+                        className="w-full bg-[var(--white)] dark:bg-slate-800 dark:text-slate-200 mt-[30px] rounded-[10px]">
                         {/* table header */}
                         <thead>
                         <tr className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
                             <th>نام و نام خانوادگی</th>
                             <th>یوزرنیم</th>
-                            <th>پسورد</th>
+                            <th>شهر</th>
                             <th>شماره تماس</th>
                             <th>ایمیل</th>
                             <th>اکشن</th>
@@ -155,11 +169,11 @@ export default function UsersTable() {
 
                         {
                             allUsers.map(user => (
-                                <tr key={user.id}
+                                <tr key={user.user_code}
                                     className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
-                                    <td>{user.firsname} {user.lastname}</td>
+                                    <td>{user.first_name} {user.last_name}</td>
                                     <td>{user.username}</td>
-                                    <td>{user.password}</td>
+                                    <td>{user.city}</td>
                                     <td>{user.phone}</td>
                                     <td>{user.email}</td>
                                     <td className="[&>button]:btn !p-[5px]">
@@ -169,12 +183,12 @@ export default function UsersTable() {
                                         }}>جزئیات
                                         </button>
                                         <button className="red-btn" onClick={() => {
-                                            setMainUserID(user.id);
+                                            setMainUserID(user.user_code);
                                             setIsShowDeleteModal(true);
                                         }}>حذف
                                         </button>
                                         <button className="green-btn" onClick={() => {
-                                            setMainUserID(user.id);
+                                            setMainUserID(user.user_code);
                                             setIsShowEditModal(true);
                                             updateEditModalItems(user);
                                         }}>ویرایش
@@ -279,23 +293,6 @@ export default function UsersTable() {
                                        onChange={e => setNewUserUsername(e.target.value)}
                                        className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
                                        id="edit-count-input"/>
-                            </div>
-
-                        </div>
-                        {/*  */}
-                        <div className="flex flex-col items-start [&>label]:text-[var(--blue)]">
-
-                            <label htmlFor="#edit-image-input">پسورد:</label>
-                            <div
-                                className="flex items-center gap-y-[10px] w-full bg-[#f4f4f4] px-5 mt-1 rounded-[10px]">
-
-                            <span>
-                                <FaImage/>
-                            </span>
-                                <input type="text" placeholder="پسورد جدید را وارد کنید" value={newUserPassword}
-                                       onChange={e => setNewUserPassword(e.target.value)}
-                                       className="w-full bg-transparent text-[1.1rem] py-[8px] px-[10px] outline-none"
-                                       id="edit-image-input"/>
                             </div>
 
                         </div>

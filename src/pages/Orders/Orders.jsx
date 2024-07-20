@@ -1,11 +1,11 @@
 import React from 'react';
-import ErrorBox from "../../Components/ErrorBox/ErrorBox";
+import OrdersTable from "../../Components/OrdersTable/OrdersTable";
 
 export default function Orders() {
     //JSX
     return (
         <div>
-            <ErrorBox message="هیچ سفارشی یافت نشد."/>
+            <OrdersTable/>
         </div>
     );
 }

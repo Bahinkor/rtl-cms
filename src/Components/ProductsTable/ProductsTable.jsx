@@ -52,14 +52,22 @@ export default function ProductsTable({allProducts, getAllProducts}) {
     };
 
     const deleteModalSubmitAction = () => {
-        fetch(`http://localhost:3000/api/products/${mainProductId}`, {
+        fetch(`http://localhost:8000/products/delete/${mainProductId}/`, {
             method: "DELETE",
+            headers: {
+                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+            }
         })
-            .then(res => res.json())
-            .then(data => {
-                deleteModalCancelAction();
-                successDeleteNotification();
-                getAllProducts();
+            .then(res => {
+                if (res.ok) {
+                    deleteModalCancelAction();
+                    successDeleteNotification();
+                    getAllProducts();
+                } else {
+                    deleteModalCancelAction();
+                    errorNotification();
+                    console.log(res)
+                }
             })
             .catch(err => {
                 deleteModalCancelAction();
@@ -74,7 +82,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
 
     const editModalSubmitAction = (e) => {
         e.preventDefault();
-
+        
         const productNewInfos = {
             title: productNewTitle,
             price: productNewPrice,
@@ -165,12 +173,12 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                                             </button>
                                             <button className="red-btn" onClick={() => {
                                                 setIsShowDeleteModal(true)
-                                                setMainProductId(product.id)
+                                                setMainProductId(product.product_code)
                                             }}>حذف
                                             </button>
                                             <button className="blue-btn" onClick={() => {
                                                 setIsShowEditModal(true);
-                                                setMainProductId(product.id);
+                                                setMainProductId(product.product_code);
                                                 // defaults value
                                                 updateEditModalItems(product);
                                             }}>ویرایش
@@ -213,7 +221,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                         <tbody>
                         <tr className="text-center [&>*]:p-5">
                             <td>{mainProductInfos.popularity}%</td>
-                            <td>{mainProductInfos.sale_amount} تومان</td>
+                            <td>{mainProductInfos.sale_amount.toLocaleString()} تومان</td>
                             <td>{mainProductInfos.colors}</td>
                         </tr>
                         </tbody>

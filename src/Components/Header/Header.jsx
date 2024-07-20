@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DeleteModal from "../DeleteModal/DeleteModal";
 import {AiOutlineBell} from 'react-icons/ai';
 import {BsBrightnessHigh} from "react-icons/bs";
 import {IoIosLogOut} from "react-icons/io";
+import {LuMoonStar} from "react-icons/lu";
 
 export default function Header() {
     //state
     const [isShowLogoutModal, setIsShowLogoutModal] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     //function
     const closeLogoutModal = () => setIsShowLogoutModal(false);
@@ -14,6 +16,32 @@ export default function Header() {
     const logoutModalAction = () => {
         closeLogoutModal();
     }
+
+    const setDarkMode = () => {
+        if (isDarkMode) {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("darkMode", "true");
+        } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("darkMode", "false");
+        }
+    }
+
+    //useEffect
+    useEffect(() => {
+        const savedTheme = localStorage.getItem("darkMode");
+        if (savedTheme === "true") {
+            setIsDarkMode(true);
+            document.documentElement.classList.add("dark");
+        } else {
+            setIsDarkMode(false);
+            document.documentElement.classList.remove("dark");
+        }
+    }, []);
+
+    useEffect(() => {
+        setDarkMode();
+    }, [isDarkMode]);
 
     //JSX
     return (
@@ -44,8 +72,10 @@ export default function Header() {
                     <button title="اعلان ها">
                         <AiOutlineBell/>
                     </button>
-                    <button title="تغییر تم">
-                        <BsBrightnessHigh/>
+                    <button title="تغییر تم" onClick={() => setIsDarkMode(!isDarkMode)}>
+                        {
+                            isDarkMode ? <BsBrightnessHigh/> : <LuMoonStar/>
+                        }
                     </button>
                     <button title="خروج" onClick={() => setIsShowLogoutModal(true)}>
                         <IoIosLogOut/>

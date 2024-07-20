@@ -15,11 +15,15 @@ export default function Products() {
 
     // Get all products (API)
     const getAllProducts = async () => {
-        await fetch("http://localhost:3000/api/products/")
+        await fetch("http://localhost:8000/products/", {
+            method: "GET",
+            headers: {
+                "Authorization": "Token 8e52e9e5ed505d8e8e8d4dc6423ba893214a1efb",
+            }
+        })
             .then(res => res.json())
             .then(data => setAllProducts(data))
             .catch(err => {
-                errorNotification();
                 console.log(err);
             });
     }

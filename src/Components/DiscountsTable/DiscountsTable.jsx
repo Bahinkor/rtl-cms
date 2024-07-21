@@ -14,7 +14,7 @@ export default function DiscountsTable() {
             }
         })
             .then(res => res.json())
-            .catch(data => setAllDiscounts(data))
+            .then(data => setAllDiscounts(data))
             .catch(err => console.log(err));
     }
 
@@ -35,11 +35,9 @@ export default function DiscountsTable() {
                         {/* table header */}
                         <thead>
                         <tr className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
-                            <th>نام و نام خانوادگی</th>
-                            <th>یوزرنیم</th>
-                            <th>شهر</th>
-                            <th>شماره تماس</th>
-                            <th>ایمیل</th>
+                            <th>وضعیت</th>
+                            <th>درصد تخفیف</th>
+                            <th>کد تخفیف</th>
                             <th>اکشن</th>
                         </tr>
                         </thead>
@@ -47,36 +45,19 @@ export default function DiscountsTable() {
                         {/* Users list */}
                         <tbody>
 
-                        {/*{*/}
-                        {/*    allDiscounts.map(discount => (*/}
-                        {/*        <tr key={discount.discount_code}*/}
-                        {/*            className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">*/}
-                        {/*            <td>{user.first_name} {user.last_name}</td>*/}
-                        {/*            <td>{user.username}</td>*/}
-                        {/*            <td>{user.city}</td>*/}
-                        {/*            <td>{user.phone}</td>*/}
-                        {/*            <td>{user.email}</td>*/}
-                        {/*            <td className="[&>button]:btn !p-[5px]">*/}
-                        {/*                <button className="blue-btn" onClick={() => {*/}
-                        {/*                    setIsShowDetailsModal(true);*/}
-                        {/*                    setMainUserDetailInfos(user);*/}
-                        {/*                }}>جزئیات*/}
-                        {/*                </button>*/}
-                        {/*                <button className="red-btn" onClick={() => {*/}
-                        {/*                    setMainUserID(user.user_code);*/}
-                        {/*                    setIsShowDeleteModal(true);*/}
-                        {/*                }}>حذف*/}
-                        {/*                </button>*/}
-                        {/*                <button className="green-btn" onClick={() => {*/}
-                        {/*                    setMainUserID(user.user_code);*/}
-                        {/*                    setIsShowEditModal(true);*/}
-                        {/*                    updateEditModalItems(user);*/}
-                        {/*                }}>ویرایش*/}
-                        {/*                </button>*/}
-                        {/*            </td>*/}
-                        {/*        </tr>*/}
-                        {/*    ))*/}
-                        {/*}*/}
+                        {
+                            allDiscounts.map(discount => (
+                                <tr key={discount.discount_code}
+                                    className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
+                                    <td>{discount.is_active ? "فعال" : "غیرفعال"}</td>
+                                    <td>{discount.percent}%</td>
+                                    <td>{discount.title}</td>
+                                    <td className="[&>button]:btn !p-[5px]">
+                                        <button className="blue-btn">خالی</button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
 
                         </tbody>
                     </table>

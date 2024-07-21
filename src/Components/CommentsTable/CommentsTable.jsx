@@ -52,7 +52,7 @@ export default function CommentsTable() {
 
     const deleteModalSubmitAction = () => {
 
-        fetch(`http://localhost:8000/comments/delete/${mainCommentID}`, {
+        fetch(`http://localhost:8000/comments/delete/${mainCommentID}/`, {
             method: "DELETE",
             headers: {
                 "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",

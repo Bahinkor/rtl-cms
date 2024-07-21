@@ -62,9 +62,9 @@ export default function UsersTable() {
     const closeEditModal = () => setIsShowEditModal(false);
     const closeDetailsModal = () => setIsShowDetailsModal(false);
 
-    const deleteModalSubmitAction = () => {
+    const deleteModalSubmitAction = async () => {
 
-        fetch(`http://localhost:8000/users/delete/${mainUserID}/`, {
+        await fetch(`http://localhost:8000/users/delete/${mainUserID}/`, {
             method: "DELETE",
             headers: {
                 "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",

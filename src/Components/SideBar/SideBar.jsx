@@ -35,7 +35,7 @@ export default function SideBar() {
                     <BsBagCheck className="ml-[8px]"/>
                     سفارشات
                 </NavLink>
-                <NavLink to="/offs" className="hover:sidebar-active-item">
+                <NavLink to="/discounts" className="hover:sidebar-active-item">
                     <BsCurrencyDollar className="ml-[8px]"/>
                     تخفیف ها
                 </NavLink>

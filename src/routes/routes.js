@@ -28,7 +28,7 @@ const routes = [
         element: <Orders/>
     },
     {
-        path: "/offs",
+        path: "/discounts",
         element: <Discounts/>
     },
     {

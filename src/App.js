@@ -1,5 +1,5 @@
 import React from 'react';
-import {useRoutes} from "react-router-dom";
+import {useRoutes, useLocation} from "react-router-dom";
 import routes from "./routes/routes";
 import SideBar from "./Components/SideBar/SideBar";
 import Header from "./Components/Header/Header";
@@ -11,17 +11,27 @@ function App() {
     //Router
     const router = useRoutes(routes);
 
+    //Location
+    const location = useLocation();
 
     //JSX
     return (
-        <div className="App flex">
-            <SideBar/>
+        <div className="flex size-full">
+            {
+                location.pathname !== "/login" && (
+                    <SideBar/>
+                )
+            }
 
             {/* Notification Modal */}
             <ToastContainer/>
 
-            <main className="flex-[4] p-5 pr-[280px]">
-                <Header/>
+            <main className={`flex-[4] size-full p-5 ${location.pathname !== "/login" && "pr-[280px]"}`}>
+                {
+                    location.pathname !== "/login" && (
+                        <Header/>
+                    )
+                }
 
                 {/* Router */}
                 {router}

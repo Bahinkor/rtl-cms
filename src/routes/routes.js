@@ -5,6 +5,7 @@ import Users from "../pages/Users/Users";
 import Orders from "../pages/Orders/Orders";
 import Discounts from "../pages/Discounts/Discounts";
 import NotFound from "../pages/NotFound/NotFound";
+import Login from "../pages/Login/Login";
 
 const routes = [
     {
@@ -30,6 +31,10 @@ const routes = [
     {
         path: "/discounts",
         element: <Discounts/>
+    },
+    {
+        path: "/login",
+        element: <Login/>
     },
     {
         path: "*",

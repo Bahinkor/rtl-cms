@@ -3,7 +3,7 @@ import Products from "../pages/Products/Products";
 import Comments from "../pages/Comments/Comments";
 import Users from "../pages/Users/Users";
 import Orders from "../pages/Orders/Orders";
-import Offs from "../pages/Offs/Offs";
+import Discounts from "../pages/Discounts/Discounts";
 import NotFound from "../pages/NotFound/NotFound";
 
 const routes = [
@@ -29,7 +29,7 @@ const routes = [
     },
     {
         path: "/offs",
-        element: <Offs/>
+        element: <Discounts/>
     },
     {
         path: "*",

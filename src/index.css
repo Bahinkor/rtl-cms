@@ -64,4 +64,8 @@
         @apply bg-green-600
     }
 
+    .header-item {
+        @apply flex items-center justify-center size-10 p-[10px] bg-[var(--blue)] text-[var(--white)] rounded-[10px] search-box-shadow
+    }
+
 }

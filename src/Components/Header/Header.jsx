@@ -4,7 +4,6 @@ import {AiOutlineBell} from 'react-icons/ai';
 import {BsBrightnessHigh} from "react-icons/bs";
 import {IoIosLogOut} from "react-icons/io";
 import {LuMoonStar} from "react-icons/lu";
-import "./style.css";
 
 export default function Header() {
     //state

@@ -5,6 +5,7 @@ import {MdProductionQuantityLimits} from "react-icons/md";
 import {BiCommentDetail} from "react-icons/bi";
 import {FiUsers} from "react-icons/fi";
 import {BsBagCheck, BsCurrencyDollar} from "react-icons/bs";
+import "./style.css"
 
 export default function SideBar() {
 

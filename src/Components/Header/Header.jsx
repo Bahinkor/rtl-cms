@@ -15,7 +15,8 @@ export default function Header() {
     const closeLogoutModal = () => setIsShowLogoutModal(false);
 
     const logoutModalAction = () => {
-        closeLogoutModal();
+        localStorage.removeItem("key");
+        window.location.reload();
     }
 
     const setDarkMode = () => {

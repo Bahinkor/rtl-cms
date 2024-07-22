@@ -4,6 +4,7 @@ import {AiOutlineBell} from 'react-icons/ai';
 import {BsBrightnessHigh} from "react-icons/bs";
 import {IoIosLogOut} from "react-icons/io";
 import {LuMoonStar} from "react-icons/lu";
+import {Link} from "react-router-dom";
 
 export default function Header() {
     //state
@@ -56,7 +57,7 @@ export default function Header() {
                 </div>
 
                 <div
-                    className="flex gap-5 [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button]:size-10 [&>button]:p-[10px] [&>button]:bg-[var(--blue)] [&>button]:text-[var(--white)] [&>button]:rounded-[10px] [&>button]:search-box-shadow">
+                    className="flex gap-5">
                     {/* search box */}
                     {/* search-box-shadow is custom class */}
                     <div
@@ -69,15 +70,15 @@ export default function Header() {
                     </div>
 
                     {/* Buttons */}
-                    <button title="اعلان ها">
+                    <Link to="*" className="header-item" title="اعلان ها">
                         <AiOutlineBell/>
-                    </button>
-                    <button title="تغییر تم" onClick={() => setIsDarkMode(!isDarkMode)}>
+                    </Link>
+                    <button className="header-item" title="تغییر تم" onClick={() => setIsDarkMode(!isDarkMode)}>
                         {
                             isDarkMode ? <BsBrightnessHigh/> : <LuMoonStar/>
                         }
                     </button>
-                    <button title="خروج" onClick={() => setIsShowLogoutModal(true)}>
+                    <button className="header-item" title="خروج" onClick={() => setIsShowLogoutModal(true)}>
                         <IoIosLogOut/>
                     </button>
                 </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {useRoutes, useLocation} from "react-router-dom";
+import {useRoutes, useLocation, Navigate} from "react-router-dom";
 import routes from "./routes/routes";
 import SideBar from "./Components/SideBar/SideBar";
 import Header from "./Components/Header/Header";
@@ -11,32 +11,42 @@ function App() {
     //Router
     const router = useRoutes(routes);
 
+    //Local Storage
+    const keyValue = localStorage.getItem("key");
+
     //Location
     const location = useLocation();
 
     //JSX
     return (
-        <div className="flex size-full">
+        <>
+
             {
-                location.pathname !== "/login" && (
-                    <SideBar/>
-                )
+                keyValue === null && <Navigate to="/login"/>
             }
 
-            {/* Notification Modal */}
-            <ToastContainer/>
-
-            <main className={`flex-[4] size-full p-5 ${location.pathname !== "/login" && "pr-[280px]"}`}>
+            <div className="flex size-full">
                 {
                     location.pathname !== "/login" && (
-                        <Header/>
+                        <SideBar/>
                     )
                 }
 
-                {/* Router */}
-                {router}
-            </main>
-        </div>
+                {/* Notification Modal */}
+                <ToastContainer/>
+
+                <main className={`flex-[4] size-full p-5 ${location.pathname !== "/login" && "pr-[280px]"}`}>
+                    {
+                        location.pathname !== "/login" && (
+                            <Header/>
+                        )
+                    }
+
+                    {/* Router */}
+                    {router}
+                </main>
+            </div>
+        </>
     );
 }
 

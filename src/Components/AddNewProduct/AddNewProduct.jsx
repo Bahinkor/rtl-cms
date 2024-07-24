@@ -3,22 +3,10 @@ import {FaDollarSign, FaImage, FaFire, FaSellcast} from "react-icons/fa";
 import {MdOutlineProductionQuantityLimits, MdInvertColors} from "react-icons/md";
 import {TbRosetteDiscountCheckFilled} from "react-icons/tb";
 //react-toastify package
-import {toast} from "react-toastify";
+import {successNotification, errorNotification} from "../../react-toastify/react-toastify";
 
 
 export default function AddNewProduct({getAllProducts}) {
-    //react-toastify package variables
-    const successNotification = () => toast.success("محصول اضافه شد.", {
-        rtl: true,
-        pauseOnHover: false,
-        autoClose: 3000,
-    });
-    const errorNotification = () => toast.error("اوه، با خطا مواجه شدیم!", {
-        rtl: true,
-        pauseOnHover: false,
-        autoClose: 3000,
-    });
-
     //state
     const [newProductTitle, setNewProductTitle] = useState("");
     const [newProductPrice, setNewProductPrice] = useState("");

@@ -3,13 +3,13 @@ import ErrorBox from "../ErrorBox/ErrorBox";
 import Loading from "../Loading/Loading";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import EditModal from "../EditModal/EditModal";
-import DetailModal from "../DetailsModal/DetailsModal";
-import {toast} from "react-toastify";
 import {MdInvertColors, MdOutlineProductionQuantityLimits} from "react-icons/md";
 import {AiOutlineDollarCircle} from "react-icons/ai";
 import {TbRosetteDiscountCheckFilled} from "react-icons/tb";
 import {FaFire, FaImage, FaSellcast} from "react-icons/fa";
 import DetailsModal from "../DetailsModal/DetailsModal";
+//react-toastify
+import {successNotification, errorNotification} from "../../react-toastify/react-toastify";
 
 export default function UsersTable() {
     //state
@@ -30,19 +30,6 @@ export default function UsersTable() {
     const [newUserAddress, setNewUserAddress] = useState("");
     const [newUserScore, setNewUserScore] = useState("");
     const [newUserBuy, setNewUserBuy] = useState("");
-
-    //react-toastify package function
-    const successNotification = () => toast.success("عملیات موفقیت آمیز بود.", {
-        rtl: true,
-        pauseOnHover: false,
-        autoClose: 3000,
-    });
-
-    const errorNotification = () => toast.error("اوه، با خطا مواجه شدیم!", {
-        rtl: true,
-        pauseOnHover: false,
-        autoClose: 3000,
-    });
 
     //function
     const getAllUsers = async () => {

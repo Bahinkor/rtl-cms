@@ -9,26 +9,13 @@ import EditModal from "../EditModal/EditModal";
 import ErrorBox from "../ErrorBox/ErrorBox";
 import Loading from "../Loading/Loading";
 //react-toastify package
-import {toast} from 'react-toastify';
+import {
+    errorNotification,
+    successDeleteNotification,
+    successPutNotification
+} from "../../react-toastify/react-toastify";
 
 export default function ProductsTable({allProducts, getAllProducts}) {
-    //react-toastify package functions
-    const successDeleteNotification = () => toast.success("محصول مورد نظر حذف شد.", {
-        rtl: true,
-        pauseOnHover: false,
-        autoClose: 3000,
-    });
-    const successPutNotification = () => toast.success("محصول مورد نظر ویرایش شد.", {
-        rtl: true,
-        pauseOnHover: false,
-        autoClose: 3000,
-    });
-    const errorNotification = () => toast.error("اوه، با خطا مواجه شدیم!", {
-        rtl: true,
-        pauseOnHover: false,
-        autoClose: 3000,
-    });
-
     //state (PUT - New product titles)
     const [productNewTitle, setProductNewTitle] = useState("");
     const [productNewPrice, setProductNewPrice] = useState("");

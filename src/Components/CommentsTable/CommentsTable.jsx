@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {toast} from "react-toastify";
 import Loading from "../Loading/Loading";
 import ErrorBox from "../ErrorBox/ErrorBox";
 import DetailsModal from "../DetailsModal/DetailsModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import {successNotification, errorNotification} from "../../react-toastify/react-toastify";
 
 export default function CommentsTable() {
     //state
@@ -14,19 +14,6 @@ export default function CommentsTable() {
     const [isShowRejectModal, setIsShowRejectModal] = useState(false);
     const [mainCommentBody, setMainCommentBody] = useState("");
     const [mainCommentID, setMainCommentID] = useState(null);
-
-    //react-toastify package function
-    const successNotification = () => toast.success("عملیات موفقیت آمیز بود.", {
-        rtl: true,
-        pauseOnHover: false,
-        autoClose: 3000,
-    });
-
-    const errorNotification = () => toast.error("اوه، با خطا مواجه شدیم!", {
-        rtl: true,
-        pauseOnHover: false,
-        autoClose: 3000,
-    });
 
     //function
     const getAllComments = () => {

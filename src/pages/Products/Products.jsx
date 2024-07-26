@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import AddNewProduct from '../../Components/AddNewProduct/AddNewProduct';
 import ProductsTable from '../../Components/ProductsTable/ProductsTable';
+import {KeyContext} from "../../context-api/GetKeyValueContext";
 //react-toastify package
 import {ToastContainer, toast} from "react-toastify";
 //styles
@@ -10,19 +11,20 @@ export default function Products() {
     //state (all products)
     const [allProducts, setAllProducts] = useState(null);
 
+    //context
+    const keyValue = useContext(KeyContext)[0];
+
     // Get all products (API)
     const getAllProducts = async () => {
         await fetch("http://localhost:8000/products/", {
             method: "GET",
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             }
         })
             .then(res => res.json())
             .then(data => setAllProducts(data))
-            .catch(err => {
-                console.log(err);
-            });
+            .catch(err => console.log(err));
     }
 
     //useEffect

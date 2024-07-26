@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import ErrorBox from "../ErrorBox/ErrorBox";
 import Loading from "../Loading/Loading";
 import DeleteModal from "../DeleteModal/DeleteModal";
@@ -8,6 +8,7 @@ import {AiOutlineDollarCircle} from "react-icons/ai";
 import {TbRosetteDiscountCheckFilled} from "react-icons/tb";
 import {FaFire, FaImage, FaSellcast} from "react-icons/fa";
 import DetailsModal from "../DetailsModal/DetailsModal";
+import {KeyContext} from "../../context-api/GetKeyValueContext";
 //react-toastify
 import {successNotification, errorNotification} from "../../react-toastify/react-toastify";
 
@@ -31,12 +32,15 @@ export default function UsersTable() {
     const [newUserScore, setNewUserScore] = useState("");
     const [newUserBuy, setNewUserBuy] = useState("");
 
+    //context
+    const keyValue = useContext(KeyContext)[0];
+
     //function
     const getAllUsers = async () => {
 
         await fetch("http://localhost:8000/users/", {
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             }
         })
             .then(res => res.json())
@@ -54,7 +58,7 @@ export default function UsersTable() {
         await fetch(`http://localhost:8000/users/delete/${mainUserID}/`, {
             method: "DELETE",
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             }
         })
             .then(res => {
@@ -91,7 +95,7 @@ export default function UsersTable() {
         await fetch(`http://localhost:8000/users/update/${mainUserID}/`, {
             method: "PUT",
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             },
             body: newUserInfos
         })

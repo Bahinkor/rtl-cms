@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {FaImage, FaFire, FaSellcast} from "react-icons/fa";
 import {MdOutlineProductionQuantityLimits, MdInvertColors} from "react-icons/md";
 import {TbRosetteDiscountCheckFilled} from "react-icons/tb";
@@ -8,6 +8,7 @@ import DetailsModal from "../DetailsModal/DetailsModal";
 import EditModal from "../EditModal/EditModal";
 import ErrorBox from "../ErrorBox/ErrorBox";
 import Loading from "../Loading/Loading";
+import {KeyContext} from "../../context-api/GetKeyValueContext";
 //react-toastify package
 import {
     errorNotification,
@@ -33,6 +34,9 @@ export default function ProductsTable({allProducts, getAllProducts}) {
     const [mainProductId, setMainProductId] = useState(null);
     const [mainProductInfos, setMainProductInfos] = useState({});
 
+    //context
+    const keyValue = useContext(KeyContext)[0];
+
     //functions
     const deleteModalCancelAction = () => {
         setIsShowDeleteModal(false);
@@ -42,7 +46,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
         fetch(`http://localhost:8000/products/delete/${mainProductId}/`, {
             method: "DELETE",
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             }
         })
             .then(res => {
@@ -82,7 +86,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
         fetch(`http://localhost:8000/products/update/${mainProductId}/`, {
             method: "PUT",
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             },
             body: productNewInfos,
         })

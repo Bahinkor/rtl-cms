@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {FaDollarSign, FaImage, FaFire, FaSellcast} from "react-icons/fa";
 import {MdOutlineProductionQuantityLimits, MdInvertColors} from "react-icons/md";
 import {TbRosetteDiscountCheckFilled} from "react-icons/tb";
+import {KeyContext} from "../../context-api/GetKeyValueContext";
 //react-toastify package
 import {successNotification, errorNotification} from "../../react-toastify/react-toastify";
 
@@ -15,6 +16,9 @@ export default function AddNewProduct({getAllProducts}) {
     const [newProductPopularity, setNewProductPopularity] = useState("");
     const [newProductSale, setNewProductSale] = useState("");
     const [newProductColors, setNewProductColors] = useState("");
+
+    //context
+    const keyValue = useContext(KeyContext)[0];
 
     //functions
     const clearInputValues = () => {
@@ -41,7 +45,7 @@ export default function AddNewProduct({getAllProducts}) {
         fetch("http://localhost:8000/products/add/", {
             method: "POST",
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             },
             body: newProductInfos
         })

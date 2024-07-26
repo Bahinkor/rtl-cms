@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Loading from '../Loading/Loading';
 import ErrorBox from '../ErrorBox/ErrorBox';
 import DetailsModal from '../DetailsModal/DetailsModal';
+import {KeyContext} from "../../context-api/GetKeyValueContext";
+
 
 export default function OrdersTable() {
     //state
@@ -10,11 +12,14 @@ export default function OrdersTable() {
     const [mainOrderID, setMainOrderID] = useState(null);
     const [isSowDetailsModal, setIsSowDetailsModal] = useState(false);
 
+    //context
+    const keyValue = useContext(KeyContext)[0];
+
     //function
     const getAllOrders = async () => {
         await fetch("http://localhost:8000/orders/", {
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             }
         })
             .then(res => res.json())
@@ -29,7 +34,7 @@ export default function OrdersTable() {
     const getMainOrderItems = async () => {
         await fetch(`http://localhost:8000/orders/detail/items/${mainOrderID}/`, {
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             }
         })
             .then(res => res.json())

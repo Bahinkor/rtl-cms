@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Loading from "../Loading/Loading";
 import ErrorBox from "../ErrorBox/ErrorBox";
 import DetailsModal from "../DetailsModal/DetailsModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import {KeyContext} from "../../context-api/GetKeyValueContext";
 import {successNotification, errorNotification} from "../../react-toastify/react-toastify";
 
 export default function CommentsTable() {
@@ -15,12 +16,15 @@ export default function CommentsTable() {
     const [mainCommentBody, setMainCommentBody] = useState("");
     const [mainCommentID, setMainCommentID] = useState(null);
 
+    //context
+    const keyValue = useContext(KeyContext)[0];
+
     //function
     const getAllComments = () => {
 
         fetch("http://localhost:8000/comments/", {
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             }
         })
             .then(res => res.json())
@@ -42,7 +46,7 @@ export default function CommentsTable() {
         fetch(`http://localhost:8000/comments/delete/${mainCommentID}/`, {
             method: "DELETE",
             headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
             }
         })
             .then(res => {

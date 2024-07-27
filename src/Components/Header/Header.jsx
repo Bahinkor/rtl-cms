@@ -11,6 +11,7 @@ export default function Header() {
     //state
     const [isShowLogoutModal, setIsShowLogoutModal] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const [userInfo, setUserInfo] = useState({});
 
     //context
     const keyValue = useContext(KeyContext)[0];
@@ -36,12 +37,12 @@ export default function Header() {
     // Get User Infos
     const getUserInfo = async () => {
         await fetch("http://localhost:8000/users/detail/", {
-            // headers: {
-            //     "Authorization": `Token ${keyValue !== null && keyValue}`,
-            // }
+            headers: {
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
+            }
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => setUserInfo(data))
             .catch(err => console.log(err));
     }
 
@@ -70,8 +71,8 @@ export default function Header() {
                     <img src="/images/profile-img/default-profile.png" alt="admin profile"
                          className="w-[50px] rounded-full"/>
                     <div className="flex flex-col">
-                        <h2 className="text-[1.2rem] dark:text-slate-200">محمدرضا بهین کر</h2>
-                        <h3 className="text-[#858585]">برنامه نویس</h3>
+                        <h2 className="text-[1.2rem] dark:text-slate-200">{userInfo.first_name} {userInfo.last_name}</h2>
+                        <h3 className="text-[#858585]">{userInfo.username}</h3>
                     </div>
                 </div>
 

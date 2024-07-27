@@ -16,6 +16,7 @@ export default function CommentsTable() {
     const [isShowRejectModal, setIsShowRejectModal] = useState(false);
     const [isShowReplyModal, setIsShowReplyModal] = useState(false);
     const [replyBody, setReplyBody] = useState("");
+    const [mainCommentInfo, setMainCommentInfo] = useState(null);
     const [mainCommentBody, setMainCommentBody] = useState("");
     const [mainCommentID, setMainCommentID] = useState(null);
 
@@ -72,40 +73,65 @@ export default function CommentsTable() {
 
     const acceptModalSubmitAction = () => {
 
-        // fetch(`http://localhost:3000/api/comments/accept/${mainCommentID}`, {
-        //     method: "POST",
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         successNotification();
-        //         getAllComments();
-        //     })
-        //     .catch(err => {
-        //         errorNotification();
-        //         console.log(err)
-        //     })
+        const newCommentInfo = new FormData();
+        newCommentInfo.append("content", mainCommentInfo.content);
+        newCommentInfo.append("is_verified", true);
+        newCommentInfo.append("admin_repley", mainCommentInfo.admin_repley);
+
+        fetch(`http://localhost:8000/comments/update/${mainCommentID}/`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
+            },
+            body: newCommentInfo
+        })
+            .then(res => {
+                if (res.ok) {
+                    successNotification();
+                    getAllComments();
+                } else {
+                    errorNotification();
+                    console.log(res)
+                }
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err)
+            })
 
         closeAcceptModal();
-        getAllComments();
     }
 
     const rejectModalSubmitAction = () => {
 
-        // fetch(`http://localhost:3000/api/comments/reject/${mainCommentID}`, {
-        //     method: "POST"
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         successNotification();
-        //         getAllComments();
-        //     })
-        //     .catch(err => {
-        //         errorNotification();
-        //         console.log(err)
-        //     })
+        const newCommentInfo = new FormData();
+        newCommentInfo.append("content", mainCommentInfo.content);
+        newCommentInfo.append("is_verified", false);
+        newCommentInfo.append("admin_repley", mainCommentInfo.admin_repley);
+
+        fetch(`http://localhost:8000/comments/update/${mainCommentID}/`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
+            },
+            body: newCommentInfo
+        })
+            .then(res => {
+                if (res.ok) {
+                    successNotification();
+                    getAllComments();
+                } else {
+                    errorNotification();
+                    console.log(res)
+                }
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err)
+            })
 
         closeRejectModal();
-        getAllComments();
+
     }
 
     const replyModalSubmitAction = () => {
@@ -176,13 +202,15 @@ export default function CommentsTable() {
                                             comment.is_verified ? (
                                                 <button className="bg-orange-500"
                                                         onClick={() => {
-                                                            setMainCommentID(comment.id);
-                                                            setIsShowRejectModal(true)
+                                                            setMainCommentID(comment.comment_code);
+                                                            setMainCommentInfo(comment);
+                                                            setIsShowRejectModal(true);
                                                         }}>لغو تایید</button>
                                             ) : (
                                                 <button className="green-btn" onClick={() => {
-                                                    setMainCommentID(comment.id);
-                                                    setIsShowAcceptModal(true)
+                                                    setMainCommentID(comment.comment_code);
+                                                    setMainCommentInfo(comment);
+                                                    setIsShowAcceptModal(true);
                                                 }}>تایید
                                                 </button>
                                             )

@@ -46,7 +46,7 @@ export default function Header() {
                     return res.json()
                 } else {
                     localStorage.removeItem("key");
-                    location.reload();
+                    window.location.reload();
                 }
             })
             .then(data => setUserInfo(data))

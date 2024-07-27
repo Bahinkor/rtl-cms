@@ -2,11 +2,18 @@ import React, {useState, useEffect, useContext} from 'react';
 import Loading from '../Loading/Loading';
 import ErrorBox from '../ErrorBox/ErrorBox';
 import {KeyContext} from "../../context-api/GetKeyValueContext";
+import DeleteModal from "../DeleteModal/DeleteModal";
+import {errorNotification, successNotification} from "../../react-toastify/react-toastify";
 
 
 export default function DiscountsTable() {
     //state
     const [allDiscounts, setAllDiscounts] = useState(null);
+    const [mainDiscountID, setMainDiscountID] = useState(null);
+    const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
+    const [isShowAcceptModal, setIsShowAcceptModal] = useState(false);
+    const [isShowRejectModal, setIsShowRejectModal] = useState(false);
+
 
     //context
     const keyValue = useContext(KeyContext)[0];
@@ -21,6 +28,91 @@ export default function DiscountsTable() {
             .then(res => res.json())
             .then(data => setAllDiscounts(data))
             .catch(err => console.log(err));
+    }
+
+    const closeDeleteModal = () => setIsShowDeleteModal(false);
+    const closeAcceptModal = () => setIsShowAcceptModal(false);
+    const closeRejectModal = () => setIsShowRejectModal(false);
+
+    const deleteModalSubmitAction = async () => {
+
+        await fetch(`http://localhost:8000/discounts/delete/${mainDiscountID}/`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
+            }
+        })
+            .then(res => {
+                if (res.ok) {
+                    successNotification();
+                    getAllDiscounts();
+                } else {
+                    errorNotification();
+                    console.log(res)
+                }
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err);
+            });
+
+        closeDeleteModal();
+    }
+
+    const acceptDiscount = async () => {
+        const newDiscountInfos = new FormData();
+        newDiscountInfos.append("is_active", true);
+
+        await fetch(`http://localhost:8000/discounts/update/${mainDiscountID}/`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
+            },
+            body: newDiscountInfos,
+        })
+            .then(res => {
+                if (res.ok) {
+                    successNotification();
+                    getAllDiscounts();
+                } else {
+                    errorNotification();
+                    console.log(res)
+                }
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err);
+            });
+
+        closeAcceptModal();
+    }
+
+    const rejectDiscount = async () => {
+        const newDiscountInfos = new FormData();
+        newDiscountInfos.append("is_active", false);
+
+        await fetch(`http://localhost:8000/discounts/update/${mainDiscountID}/`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
+            },
+            body: newDiscountInfos,
+        })
+            .then(res => {
+                if (res.ok) {
+                    successNotification();
+                    getAllDiscounts();
+                } else {
+                    errorNotification();
+                    console.log(res)
+                }
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err);
+            });
+
+        closeRejectModal();
     }
 
     //useEffect
@@ -66,16 +158,22 @@ export default function DiscountsTable() {
                                             discount.is_active ? (
                                                 <button className="bg-orange-500"
                                                         onClick={() => {
-
-                                                        }}>غیر فعالسازی</button>
+                                                            setMainDiscountID(discount.discount_code);
+                                                            setIsShowRejectModal(true);
+                                                        }}>غیرفعالسازی</button>
                                             ) : (
                                                 <button className="green-btn" onClick={() => {
-
+                                                    setMainDiscountID(discount.discount_code);
+                                                    setIsShowAcceptModal(true);
                                                 }}>فعالسازی
                                                 </button>
                                             )
                                         }
-                                        <button className="red-btn">حذف</button>
+                                        <button className="red-btn" onClick={() => {
+                                            setMainDiscountID(discount.discount_code);
+                                            setIsShowDeleteModal(true);
+                                        }}>حذف
+                                        </button>
                                     </td>
                                 </tr>
                             ))
@@ -86,6 +184,26 @@ export default function DiscountsTable() {
                 ) : (
                     <ErrorBox message="هیچ تخفیفی یافت نشد."/>
                 )
+            }
+
+            {/* Delete Modal */}
+            {
+                isShowDeleteModal && <DeleteModal title="آیا از حذف مطمئن هستید؟" cancelAction={closeDeleteModal}
+                                                  submitAction={deleteModalSubmitAction}/>
+            }
+
+            {/* Accept Modal */}
+            {
+                isShowAcceptModal &&
+                <DeleteModal title="آیا از فعالسازی تخفیف مطمئن هستید؟" cancelAction={closeAcceptModal}
+                             submitAction={acceptDiscount}/>
+            }
+
+            {/* Delete Modal */}
+            {
+                isShowRejectModal &&
+                <DeleteModal title="آیا از غیرفعالسازی تخفیف مطمئن هستید؟" cancelAction={closeRejectModal}
+                             submitAction={rejectDiscount}/>
             }
         </>
     );

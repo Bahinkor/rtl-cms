@@ -40,6 +40,8 @@ export default function DiscountsTable() {
                         {/* table header */}
                         <thead>
                         <tr className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
+                            <th>سازنده</th>
+                            <th>تایتل</th>
                             <th>وضعیت</th>
                             <th>درصد تخفیف</th>
                             <th>کد تخفیف</th>
@@ -54,11 +56,26 @@ export default function DiscountsTable() {
                             allDiscounts.map(discount => (
                                 <tr key={discount.discount_code}
                                     className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
+                                    <td>{discount.author.username}</td>
+                                    <td>{discount.title}</td>
                                     <td>{discount.is_active ? "فعال" : "غیرفعال"}</td>
                                     <td>{discount.percent}%</td>
-                                    <td>{discount.title}</td>
+                                    <td>{discount.key}</td>
                                     <td className="[&>button]:btn !p-[5px]">
-                                        <button className="blue-btn">خالی</button>
+                                        {
+                                            discount.is_active ? (
+                                                <button className="bg-orange-500"
+                                                        onClick={() => {
+
+                                                        }}>غیر فعالسازی</button>
+                                            ) : (
+                                                <button className="green-btn" onClick={() => {
+
+                                                }}>فعالسازی
+                                                </button>
+                                            )
+                                        }
+                                        <button className="red-btn">حذف</button>
                                     </td>
                                 </tr>
                             ))

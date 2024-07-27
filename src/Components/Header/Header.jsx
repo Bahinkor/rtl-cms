@@ -41,7 +41,14 @@ export default function Header() {
                 "Authorization": `Token ${keyValue !== null && keyValue}`,
             }
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.ok) {
+                    return res.json()
+                } else {
+                    localStorage.removeItem("key");
+                    location.reload();
+                }
+            })
             .then(data => setUserInfo(data))
             .catch(err => console.log(err));
     }

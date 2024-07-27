@@ -6,9 +6,8 @@ import DeleteModal from "../DeleteModal/DeleteModal";
 import {errorNotification, successNotification} from "../../react-toastify/react-toastify";
 
 
-export default function DiscountsTable() {
+export default function DiscountsTable({getAllDiscounts, allDiscounts, setAllDiscounts}) {
     //state
-    const [allDiscounts, setAllDiscounts] = useState(null);
     const [mainDiscountID, setMainDiscountID] = useState(null);
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [isShowAcceptModal, setIsShowAcceptModal] = useState(false);
@@ -19,17 +18,6 @@ export default function DiscountsTable() {
     const keyValue = useContext(KeyContext)[0];
 
     //function
-    const getAllDiscounts = async () => {
-        await fetch("http://localhost:8000/discounts/", {
-            headers: {
-                "Authorization": `Token ${keyValue !== null && keyValue}`,
-            }
-        })
-            .then(res => res.json())
-            .then(data => setAllDiscounts(data))
-            .catch(err => console.log(err));
-    }
-
     const closeDeleteModal = () => setIsShowDeleteModal(false);
     const closeAcceptModal = () => setIsShowAcceptModal(false);
     const closeRejectModal = () => setIsShowRejectModal(false);

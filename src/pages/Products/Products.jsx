@@ -2,10 +2,6 @@ import React, {useState, useEffect, useContext} from 'react';
 import AddNewProduct from '../../Components/AddNewProduct/AddNewProduct';
 import ProductsTable from '../../Components/ProductsTable/ProductsTable';
 import {KeyContext} from "../../context-api/GetKeyValueContext";
-//react-toastify package
-import {ToastContainer, toast} from "react-toastify";
-//styles
-import 'react-toastify/dist/ReactToastify.css';
 
 export default function Products() {
     //state (all products)
@@ -39,11 +35,6 @@ export default function Products() {
         <div>
             <AddNewProduct getAllProducts={getAllProducts}/>
             <ProductsTable allProducts={allProducts} getAllProducts={getAllProducts}/>
-
-            {/* Notification Modal */}
-            <div className="text-right">
-                <ToastContainer/>
-            </div>
         </div>
     );
 }

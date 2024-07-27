@@ -1,15 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import DeleteModal from "../DeleteModal/DeleteModal";
 import {AiOutlineBell} from 'react-icons/ai';
 import {BsBrightnessHigh} from "react-icons/bs";
 import {IoIosLogOut} from "react-icons/io";
 import {LuMoonStar} from "react-icons/lu";
 import {Link} from "react-router-dom";
+import {KeyContext} from "../../context-api/GetKeyValueContext";
 
 export default function Header() {
     //state
     const [isShowLogoutModal, setIsShowLogoutModal] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
+
+    //context
+    const keyValue = useContext(KeyContext)[0];
 
     //function
     const closeLogoutModal = () => setIsShowLogoutModal(false);
@@ -29,6 +33,18 @@ export default function Header() {
         }
     }
 
+    // Get User Infos
+    const getUserInfo = async () => {
+        await fetch("http://localhost:8000/users/detail/", {
+            // headers: {
+            //     "Authorization": `Token ${keyValue !== null && keyValue}`,
+            // }
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
+    }
+
     //useEffect
     useEffect(() => {
         const savedTheme = localStorage.getItem("darkMode");
@@ -43,14 +59,16 @@ export default function Header() {
 
     useEffect(() => {
         setDarkMode();
+        getUserInfo();
     }, [isDarkMode]);
 
     //JSX
     return (
         <>
             <div className="flex items-center justify-between w-full">
-                <div className="flex items-center gap-5">
-                    <img src="/images/admin-profile01.jpg" alt="admin profile" className="w-[50px] rounded-full"/>
+                <div className="flex items-center gap-3">
+                    <img src="/images/profile-img/default-profile.png" alt="admin profile"
+                         className="w-[50px] rounded-full"/>
                     <div className="flex flex-col">
                         <h2 className="text-[1.2rem] dark:text-slate-200">محمدرضا بهین کر</h2>
                         <h3 className="text-[#858585]">برنامه نویس</h3>

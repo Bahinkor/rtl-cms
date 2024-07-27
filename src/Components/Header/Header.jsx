@@ -1,20 +1,16 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import DeleteModal from "../DeleteModal/DeleteModal";
 import {AiOutlineBell} from 'react-icons/ai';
 import {BsBrightnessHigh} from "react-icons/bs";
 import {IoIosLogOut} from "react-icons/io";
 import {LuMoonStar} from "react-icons/lu";
 import {Link} from "react-router-dom";
-import {KeyContext} from "../../context-api/GetKeyValueContext";
 
 export default function Header() {
     //state
     const [isShowLogoutModal, setIsShowLogoutModal] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [userInfo, setUserInfo] = useState({});
-
-    //context
-    const keyValue = useContext(KeyContext)[0];
 
     //function
     const closeLogoutModal = () => setIsShowLogoutModal(false);
@@ -36,6 +32,9 @@ export default function Header() {
 
     // Get User Infos
     const getUserInfo = async () => {
+        //context
+        const keyValue = localStorage.getItem("key");
+
         await fetch("http://localhost:8000/users/detail/", {
             headers: {
                 "Authorization": `Token ${keyValue !== null && keyValue}`,
@@ -44,13 +43,20 @@ export default function Header() {
             .then(res => {
                 if (res.ok) {
                     return res.json()
-                } else {
+                } else if (!res.ok) {
                     localStorage.removeItem("key");
                     window.location.reload();
                 }
             })
-            .then(data => setUserInfo(data))
-            .catch(err => console.log(err));
+            .then(data => {
+                if (data) {
+                    setUserInfo(data)
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                window.location.reload();
+            });
     }
 
     //useEffect
@@ -67,7 +73,10 @@ export default function Header() {
 
     useEffect(() => {
         setDarkMode();
-        getUserInfo();
+
+        if (window.location.pathname !== "/login") {
+            getUserInfo();
+        }
     }, [isDarkMode]);
 
     //JSX

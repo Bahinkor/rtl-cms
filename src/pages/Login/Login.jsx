@@ -39,9 +39,6 @@ export default function Login() {
 
         await fetch("http://localhost:8000/auth/login/", {
             method: "POST",
-            headers: {
-                "Authorization": "Token 502387428aee0698042273c57145ed5aea88cadb",
-            },
             body: userInfos
         })
             .then(res => {
@@ -53,9 +50,9 @@ export default function Login() {
                     return false;
                 }
             })
-            .then(data => {
-                if (data !== false) {
-                    localStorage.setItem("key", data.key);
+            .then(async data => {
+                if (data) {
+                    await localStorage.setItem("key", data.key);
                     setIsSuccessfulLogin(true);
                 }
             })

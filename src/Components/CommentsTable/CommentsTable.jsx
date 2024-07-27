@@ -3,6 +3,7 @@ import Loading from "../Loading/Loading";
 import ErrorBox from "../ErrorBox/ErrorBox";
 import DetailsModal from "../DetailsModal/DetailsModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import ReplyModal from "../ReplyModal/ReplyModal";
 import {KeyContext} from "../../context-api/GetKeyValueContext";
 import {successNotification, errorNotification} from "../../react-toastify/react-toastify";
 
@@ -13,6 +14,8 @@ export default function CommentsTable() {
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [isShowAcceptModal, setIsShowAcceptModal] = useState(false);
     const [isShowRejectModal, setIsShowRejectModal] = useState(false);
+    const [isShowReplyModal, setIsShowReplyModal] = useState(false);
+    const [replyBody, setReplyBody] = useState("");
     const [mainCommentBody, setMainCommentBody] = useState("");
     const [mainCommentID, setMainCommentID] = useState(null);
 
@@ -40,6 +43,7 @@ export default function CommentsTable() {
     const closeDeleteModal = () => setIsShowDeleteModal(false);
     const closeAcceptModal = () => setIsShowAcceptModal(false);
     const closeRejectModal = () => setIsShowRejectModal(false);
+    const closeReplyModal = () => setIsShowReplyModal(false);
 
     const deleteModalSubmitAction = () => {
 
@@ -82,6 +86,7 @@ export default function CommentsTable() {
         //     })
 
         closeAcceptModal();
+        getAllComments();
     }
 
     const rejectModalSubmitAction = () => {
@@ -100,6 +105,12 @@ export default function CommentsTable() {
         //     })
 
         closeRejectModal();
+        getAllComments();
+    }
+
+    const replyModalSubmitAction = () => {
+        closeReplyModal();
+        getAllComments();
     }
 
     //useEffect
@@ -139,7 +150,7 @@ export default function CommentsTable() {
                                     className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5"
                                     key={comment.comment_code}>
                                     <td>{comment.user.username}</td>
-                                    <td>{comment.productID}</td>
+                                    <td>{comment.product.title}</td>
                                     <td className="[&>button]:bg-[var(--blue)] [&>button]:text-[var(--white)] [&>button]:px-[8px] [&>button]:py-[5px] [&>button]:rounded-[10px]">
                                         <button onClick={() => {
                                             setMainCommentBody(comment.content);
@@ -148,9 +159,13 @@ export default function CommentsTable() {
                                         </button>
                                     </td>
                                     <td>{comment.date}</td>
-                                    <td>{comment.hour}</td>
+                                    <td>{comment.time}</td>
                                     <td className="[&>button]:btn !p-[10px]">
-                                        <button className="blue-btn">پاسخ</button>
+                                        <button className="blue-btn" onClick={() => {
+                                            setReplyBody(comment.admin_reply);
+                                            setIsShowReplyModal(true);
+                                        }}>پاسخ
+                                        </button>
                                         <button className="red-btn" onClick={() => {
                                             setMainCommentID(comment.comment_code);
                                             setIsShowDeleteModal(true)
@@ -158,18 +173,18 @@ export default function CommentsTable() {
                                         </button>
 
                                         {
-                                            comment.isAccept === 0 ? (
-                                                <button className="green-btn" onClick={() => {
-                                                    setMainCommentID(comment.id);
-                                                    setIsShowAcceptModal(true)
-                                                }}>تایید
-                                                </button>
-                                            ) : (
+                                            comment.is_verified ? (
                                                 <button className="bg-orange-500"
                                                         onClick={() => {
                                                             setMainCommentID(comment.id);
                                                             setIsShowRejectModal(true)
                                                         }}>لغو تایید</button>
+                                            ) : (
+                                                <button className="green-btn" onClick={() => {
+                                                    setMainCommentID(comment.id);
+                                                    setIsShowAcceptModal(true)
+                                                }}>تایید
+                                                </button>
                                             )
                                         }
 
@@ -213,6 +228,18 @@ export default function CommentsTable() {
             {
                 isShowRejectModal && <DeleteModal cancelAction={closeRejectModal} submitAction={rejectModalSubmitAction}
                                                   title="آیا از لغو تایید اطمینان دارید؟"/>
+            }
+
+            {/* Reply Modal */}
+            {
+                isShowReplyModal && (
+                    <ReplyModal onClose={closeReplyModal} submitAction={closeReplyModal}>
+                        <textarea
+                            className="w-full min-h-[8rem] max-h-[16rem] bg-slate-200 dark:bg-slate-800 dark:text-slate-200 outline-none focus:outline-none"
+                            value={replyBody}
+                            onChange={e => setReplyBody(e.target.value)}></textarea>
+                    </ReplyModal>
+                )
             }
 
         </>

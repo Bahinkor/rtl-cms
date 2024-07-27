@@ -97,7 +97,7 @@ export default function CommentsTable() {
             .catch(err => {
                 errorNotification();
                 console.log(err)
-            })
+            });
 
         closeAcceptModal();
     }
@@ -128,15 +128,41 @@ export default function CommentsTable() {
             .catch(err => {
                 errorNotification();
                 console.log(err)
-            })
+            });
 
         closeRejectModal();
 
     }
 
     const replyModalSubmitAction = () => {
+
+        const newCommentInfo = new FormData();
+        newCommentInfo.append("content", mainCommentInfo.content);
+        newCommentInfo.append("is_verified", mainCommentInfo.is_verified);
+        newCommentInfo.append("admin_repley", replyBody);
+
+        fetch(`http://localhost:8000/comments/update/${mainCommentID}/`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Token ${keyValue !== null && keyValue}`,
+            },
+            body: newCommentInfo
+        })
+            .then(res => {
+                if (res.ok) {
+                    successNotification();
+                    getAllComments();
+                } else {
+                    errorNotification();
+                    console.log(res)
+                }
+            })
+            .catch(err => {
+                errorNotification();
+                console.log(err)
+            });
+
         closeReplyModal();
-        getAllComments();
     }
 
     //useEffect
@@ -188,6 +214,8 @@ export default function CommentsTable() {
                                     <td>{comment.time}</td>
                                     <td className="[&>button]:btn !p-[10px]">
                                         <button className="blue-btn" onClick={() => {
+                                            setMainCommentID(comment.comment_code);
+                                            setMainCommentInfo(comment);
                                             setReplyBody(comment.admin_reply);
                                             setIsShowReplyModal(true);
                                         }}>پاسخ
@@ -261,7 +289,7 @@ export default function CommentsTable() {
             {/* Reply Modal */}
             {
                 isShowReplyModal && (
-                    <ReplyModal onClose={closeReplyModal} submitAction={closeReplyModal}>
+                    <ReplyModal onClose={closeReplyModal} submitAction={replyModalSubmitAction}>
                         <textarea
                             className="w-full min-h-[8rem] max-h-[16rem] bg-slate-200 dark:bg-slate-800 dark:text-slate-200 outline-none focus:outline-none"
                             value={replyBody}

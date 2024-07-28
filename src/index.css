@@ -49,7 +49,7 @@
     }
 
     .btn {
-        @apply text-[var(--white)] px-[8px] py-[5px] ml-1 rounded-[10px]
+        @apply text-[var(--white)] px-[8px] py-[5px] rounded-[10px]
     }
 
     .red-btn {

@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import DeleteModal from "../DeleteModal/DeleteModal";
+import {isShowMobileMenu} from "../../context-api/IsShowMobileMenuContext";
 import {AiOutlineBell} from 'react-icons/ai';
 import {BsBrightnessHigh} from "react-icons/bs";
-import {IoIosLogOut} from "react-icons/io";
+import {IoIosLogOut, IoIosMenu} from "react-icons/io";
 import {LuMoonStar} from "react-icons/lu";
 import {Link} from "react-router-dom";
 
@@ -11,6 +12,9 @@ export default function Header() {
     const [isShowLogoutModal, setIsShowLogoutModal] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [userInfo, setUserInfo] = useState({});
+
+    //context (Mobile Menu)
+    const {isOpen, setIsOpen} = useContext(isShowMobileMenu);
 
     //function
     const closeLogoutModal = () => setIsShowLogoutModal(false);
@@ -97,7 +101,7 @@ export default function Header() {
                     {/* search box */}
                     {/* search-box-shadow is custom class */}
                     <div
-                        className="flex items-center justify-between w-[400px] h-[45px] bg-[var(--white)] dark:bg-slate-600 pl-[5px] rounded-[15px] overflow-hidden search-box-shadow">
+                        className="hidden lg:flex items-center justify-between w-[400px] h-[45px] bg-[var(--white)] dark:bg-slate-600 pl-[5px] rounded-[15px] overflow-hidden search-box-shadow">
                         <input type="text" placeholder="جستجو کنید..."
                                className="w-full dark:bg-slate-600 dark:text-slate-200 text-[1.1rem] py-[10px] pl-[10px] pr-[20px] outline-none focus:outline-none"/>
                         <button
@@ -116,6 +120,12 @@ export default function Header() {
                     </button>
                     <button className="header-item" title="خروج" onClick={() => setIsShowLogoutModal(true)}>
                         <IoIosLogOut/>
+                    </button>
+                    {/* Mobile menu button */}
+                    <button className="header-item fixed top-[75px] left-[20px] md:hidden" title="منو" onClick={() => {
+                        setIsOpen(!isOpen);
+                    }}>
+                        <IoIosMenu size={40}/>
                     </button>
                 </div>
             </div>

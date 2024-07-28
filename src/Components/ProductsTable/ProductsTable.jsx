@@ -159,7 +159,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                                         <td>{product.title}</td>
                                         <td>{product.price.toLocaleString()} تومان</td>
                                         <td>{product.count}</td>
-                                        <td className="[&>button]:btn">
+                                        <td className="[&>button]:btn flex flex-col lg:flex-row gap-1">
                                             <button className="green-btn" onClick={() => {
                                                 setIsShowDetailsModal(true)
                                                 setMainProductInfos(product);

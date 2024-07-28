@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
+import {isShowMobileMenu} from "../../context-api/IsShowMobileMenuContext";
 import {NavLink} from "react-router-dom";
 import {AiOutlineHome} from "react-icons/ai";
 import {MdProductionQuantityLimits} from "react-icons/md";
@@ -8,10 +9,21 @@ import {BsBagCheck, BsCurrencyDollar} from "react-icons/bs";
 import "./style.css"
 
 export default function SideBar() {
+    //context
+    const {isOpen, setIsOpen} = useContext(isShowMobileMenu);
+    const screenSize = window.innerWidth;
+
+    //useEffect
+    useEffect(() => {
+        if (screenSize >= 768) {
+            setIsOpen(true);
+        }
+    }, [screenSize]);
 
     // JSX
     return (
-        <div className="flex-1 fixed h-full bg-[var(--blue)] dark:text-slate-200">
+        <div
+            className={`flex-1 fixed h-full bg-[var(--blue)] dark:text-slate-200 transition ${isOpen || "transform translate-x-[244px]"}`}>
             <h1 className="text-[1.4rem] text-[var(--white)] p-[15px] border-b border-solid border-[#6c48bb]">به داشبورد
                 خود خوش آمدید</h1>
 

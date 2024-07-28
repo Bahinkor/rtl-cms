@@ -137,7 +137,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                             {/* table header */}
                             <thead>
                             <tr className="flex items-center w-full text-center py-5 [&>*]:w-full">
-                                <th>عکس</th>
+                                <th className="hidden xs:inline-block">عکس</th>
                                 <th>اسم</th>
                                 <th>قیمت</th>
                                 <th>موجودی</th>
@@ -152,7 +152,7 @@ export default function ProductsTable({allProducts, getAllProducts}) {
                                 allProducts.map(product => (
                                     <tr key={product.product_code}
                                         className="flex items-center w-full [&>td]:flex [&>td]:justify-center [&>td]:items-center [&>td]:w-full [&>td]:text-center [&>td]:p-5">
-                                        <td>
+                                        <td className="!hidden xs:!flex">
                                             <img src={product.image} alt="product image"
                                                  className="w-[150px] rounded-[10px] object-cover"/>
                                         </td>

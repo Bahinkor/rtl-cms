@@ -150,9 +150,9 @@ export default function OrdersTable() {
                         <thead>
                         <tr className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
                             <th>یوزرنیم</th>
-                            <th>وضعیت</th>
+                            <th className="hidden lg:inline-block">وضعیت</th>
                             <th>تایید شده</th>
-                            <th>شماره سفارش</th>
+                            <th className="hidden lg:inline-block">شماره سفارش</th>
                             <th>اکشن</th>
                         </tr>
                         </thead>
@@ -165,10 +165,10 @@ export default function OrdersTable() {
                                 <tr key={order.order_code}
                                     className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
                                     <td>{order.user.username}</td>
-                                    <td>{order.is_active ? "فعال" : "غیرفعال"}</td>
+                                    <td className="hidden lg:inline-block">{order.is_active ? "فعال" : "غیرفعال"}</td>
                                     <td>{order.is_verified ? "تایید شده" : "تایید نشده"}</td>
-                                    <td>{order.order_code}</td>
-                                    <td className="[&>button]:btn !p-[5px]">
+                                    <td className="hidden lg:inline-block">{order.order_code}</td>
+                                    <td className="[&>button]:btn flex flex-col md:flex-row gap-1 !p-[5px]">
                                         <button className="blue-btn" onClick={() => {
                                             setMainOrderID(order.order_code);
                                             setIsShowDetailsModal(true);

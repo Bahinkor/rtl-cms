@@ -120,8 +120,8 @@ export default function DiscountsTable({getAllDiscounts, allDiscounts, setAllDis
                         {/* table header */}
                         <thead>
                         <tr className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
-                            <th>سازنده</th>
-                            <th>تایتل</th>
+                            <th className="hidden md:inline-block">سازنده</th>
+                            <th className="hidden md:inline-block">تایتل</th>
                             <th>وضعیت</th>
                             <th>درصد تخفیف</th>
                             <th>کد تخفیف</th>
@@ -136,12 +136,12 @@ export default function DiscountsTable({getAllDiscounts, allDiscounts, setAllDis
                             allDiscounts.map(discount => (
                                 <tr key={discount.discount_code}
                                     className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
-                                    <td>{discount.author.username}</td>
-                                    <td>{discount.title}</td>
+                                    <td className="hidden md:inline-block">{discount.author.username}</td>
+                                    <td className="hidden md:inline-block">{discount.title}</td>
                                     <td>{discount.is_active ? "فعال" : "غیرفعال"}</td>
                                     <td>{discount.percent}%</td>
                                     <td>{discount.key}</td>
-                                    <td className="[&>button]:btn !p-[5px]">
+                                    <td className="[&>button]:btn flex flex-col lg:flex-row gap-1 !p-[5px]">
                                         {
                                             discount.is_active ? (
                                                 <button className="bg-orange-500"

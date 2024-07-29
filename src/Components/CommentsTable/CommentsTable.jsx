@@ -187,8 +187,8 @@ export default function CommentsTable() {
                             <th>اسم کاربر</th>
                             <th>محصول</th>
                             <th>کامنت</th>
-                            <th>تاریخ</th>
-                            <th>ساعت</th>
+                            <th className="hidden lg:inline-block">تاریخ</th>
+                            <th className="hidden lg:inline-block">ساعت</th>
                             <th>اکشن</th>
                         </tr>
                         </thead>
@@ -210,9 +210,9 @@ export default function CommentsTable() {
                                         }}>نمایش
                                         </button>
                                     </td>
-                                    <td>{comment.date}</td>
-                                    <td>{comment.time}</td>
-                                    <td className="[&>button]:btn !p-[10px]">
+                                    <td className="hidden lg:inline-block">{comment.date}</td>
+                                    <td className="hidden lg:inline-block">{comment.time}</td>
+                                    <td className="[&>button]:btn flex flex-col md:flex-row gap-1 !p-[10px]">
                                         <button className="blue-btn" onClick={() => {
                                             setMainCommentID(comment.comment_code);
                                             setMainCommentInfo(comment);
@@ -262,7 +262,7 @@ export default function CommentsTable() {
             {
                 isShowDetailsModal && (
                     <DetailsModal onClose={closeDetailsModal}>
-                        <p className="w-[400px] bg-[var(--white)] dark:bg-slate-700 dark:text-slate-200 p-5">{mainCommentBody}</p>
+                        <p className="w-[320px] md:w-[400px] bg-[var(--white)] dark:bg-slate-700 dark:text-slate-200 p-5">{mainCommentBody}</p>
                     </DetailsModal>
                 )
             }

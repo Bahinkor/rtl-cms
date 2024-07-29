@@ -148,9 +148,9 @@ export default function UsersTable() {
                         <tr className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
                             <th>نام و نام خانوادگی</th>
                             <th>یوزرنیم</th>
-                            <th>شهر</th>
-                            <th>شماره تماس</th>
-                            <th>ایمیل</th>
+                            <th className="hidden lg:inline-block">شهر</th>
+                            <th className="hidden lg:inline-block">شماره تماس</th>
+                            <th className="hidden lg:inline-block">ایمیل</th>
                             <th>اکشن</th>
                         </tr>
                         </thead>
@@ -164,10 +164,10 @@ export default function UsersTable() {
                                     className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
                                     <td>{user.first_name} {user.last_name}</td>
                                     <td>{user.username}</td>
-                                    <td>{user.city}</td>
-                                    <td>{user.phone}</td>
-                                    <td>{user.email}</td>
-                                    <td className="[&>button]:btn !p-[5px]">
+                                    <td className="hidden lg:inline-block">{user.city}</td>
+                                    <td className="hidden lg:inline-block">{user.phone}</td>
+                                    <td className="hidden lg:inline-block">{user.email}</td>
+                                    <td className="[&>button]:btn flex flex-col md:flex-row gap-1 !p-[5px]">
                                         <button className="blue-btn" onClick={() => {
                                             setIsShowDetailsModal(true);
                                             setMainUserDetailInfos(user);

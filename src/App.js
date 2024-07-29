@@ -37,7 +37,7 @@ function App() {
                         }
 
                         {/* Notification Modal */}
-                        <ToastContainer/>
+                        <ToastContainer className="!w-[312px] md:w-[412px]"/>
 
                         <main
                             className={`md:flex-[4] size-full p-5 ${location.pathname !== "/login" && "md:pr-[280px]"}`}>

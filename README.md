@@ -52,5 +52,5 @@ Back-End Repository: [Armin-kosary/cms-backend](https://github.com/Armin-kosary/
 
 ### `Collaborators`
 
-1 - [MohammadReza Bahinkor](https://github.com/Bahinkor/) (Front-End Developer)
+1 - [Mohammadreza Bahinkor](https://github.com/Bahinkor/) (Front-End Developer) \
 2 - [Armin Kosari](https://github.com/Armin-kosary/) (Back-End Developer)

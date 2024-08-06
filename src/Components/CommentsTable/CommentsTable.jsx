@@ -139,8 +139,8 @@ export default function CommentsTable() {
         const newCommentInfo = new FormData();
         newCommentInfo.append("content", mainCommentInfo.content);
         newCommentInfo.append("is_verified", mainCommentInfo.is_verified);
-        newCommentInfo.append("admin_repley", replyBody);
-
+        newCommentInfo.append("admin_reply", replyBody);
+        
         fetch(`http://localhost:8000/comments/update/${mainCommentID}/`, {
             method: "PUT",
             headers: {

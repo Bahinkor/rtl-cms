@@ -4,6 +4,7 @@ import ErrorBox from '../ErrorBox/ErrorBox';
 import {KeyContext} from "../../context-api/GetKeyValueContext";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import {errorNotification, successNotification} from "../../react-toastify/react-toastify";
+import {logDOM} from "@testing-library/react";
 
 
 export default function DiscountsTable({getAllDiscounts, allDiscounts, setAllDiscounts}) {
@@ -136,7 +137,7 @@ export default function DiscountsTable({getAllDiscounts, allDiscounts, setAllDis
                             allDiscounts.map(discount => (
                                 <tr key={discount.discount_code}
                                     className="flex items-center w-full text-center [&>*]:w-full [&>*]:p-5">
-                                    <td className="hidden md:inline-block">{discount.author.username}</td>
+                                    <td className="hidden md:inline-block">{discount.author ? discount.author.username : "admin"}</td>
                                     <td className="hidden md:inline-block">{discount.title}</td>
                                     <td>{discount.is_active ? "فعال" : "غیرفعال"}</td>
                                     <td>{discount.percent}%</td>

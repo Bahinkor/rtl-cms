@@ -56,7 +56,12 @@ export default function AddNewDiscount({getAllDiscounts}) {
             <h2 className="text-[2rem] dark:text-slate-200">افزودن تخفیف جدید</h2>
 
             <form className="flex flex-col items-end bg-[var(--white)] dark:bg-slate-800 p-5 mt-[30px] rounded-[20px]"
-                  onSubmit={e => e.preventDefault()}>
+                  onSubmit={e => e.preventDefault()}
+                  onKeyDown={e => {
+                      if (e.key === "Enter") {
+                          e.preventDefault();
+                      }
+                  }}>
                 <div
                     className="grid grid-cols-2 gap-y-[10px] gap-x-[15px] w-full [&>div]:flex [&>div]:items-center [&>div]:gap-y-[10px] [&>div]:w-full [&>div]:bg-[#f4f4f4] [&>div]:dark:bg-slate-600 [&>div]:dark:text-slate-200 [&>div]:rounded-[10px]">
                     {/* form inputs */}
@@ -85,7 +90,8 @@ export default function AddNewDiscount({getAllDiscounts}) {
                 </div>
                 <button
                     className="text-[1.1rem] text-[var(--white)] dark:text-slate-200 bg-[var(--blue)] py-[10px] px-5 mt-[10px] rounded-[10px]"
-                    onClick={submitNewDiscount}>
+                    onClick={submitNewDiscount}
+                    type="submit">
                     ثبت تخفیف
                 </button>
             </form>

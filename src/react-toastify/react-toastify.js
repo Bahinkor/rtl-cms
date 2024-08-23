@@ -17,10 +17,23 @@ const successDeleteNotification = () => toast.success("محصول مورد نظ�
     pauseOnHover: false,
     autoClose: 3000,
 });
+
 const successPutNotification = () => toast.success("محصول مورد نظر ویرایش شد.", {
     rtl: true,
     pauseOnHover: false,
     autoClose: 3000,
 });
 
-export {successNotification, errorNotification, successDeleteNotification, successPutNotification};
+const internetError = () => toast.error("از متصل بودن اینترنت خود اطمینان حاصل کنید.", {
+    rtl: true,
+    pauseOnHover: false,
+    autoClose: 3000,
+});
+
+export {
+    successNotification,
+    errorNotification,
+    successDeleteNotification,
+    successPutNotification,
+    internetError
+};

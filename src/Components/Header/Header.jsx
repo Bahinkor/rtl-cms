@@ -6,6 +6,7 @@ import {BsBrightnessHigh} from "react-icons/bs";
 import {IoIosLogOut, IoIosMenu} from "react-icons/io";
 import {LuMoonStar} from "react-icons/lu";
 import {Link} from "react-router-dom";
+import {internetError} from "../../react-toastify/react-toastify";
 
 export default function Header() {
     //state
@@ -21,7 +22,7 @@ export default function Header() {
 
     const logoutModalAction = () => {
         localStorage.removeItem("key");
-        window.location.reload();
+        window.location.href = "/login";
     }
 
     const setDarkMode = () => {
@@ -34,9 +35,9 @@ export default function Header() {
         }
     }
 
-    // Get User Infos
+    // Get User Info
     const getUserInfo = async () => {
-        //context
+        // Local Storage
         const keyValue = localStorage.getItem("key");
 
         await fetch("http://localhost:8000/users/detail/", {
@@ -49,7 +50,7 @@ export default function Header() {
                     return res.json()
                 } else if (!res.ok) {
                     localStorage.removeItem("key");
-                    window.location.reload();
+                    window.location.href = "/login";
                 }
             })
             .then(data => {
@@ -59,7 +60,7 @@ export default function Header() {
             })
             .catch(err => {
                 console.log(err);
-                window.location.reload();
+                internetError();
             });
     }
 

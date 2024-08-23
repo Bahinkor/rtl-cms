@@ -42,6 +42,11 @@ export default function Login() {
             body: userInfos
         })
             .then(res => {
+                // Clear Input Values
+                setUsername("");
+                setPassword("");
+
+                // Auth
                 if (res.ok) {
                     successNotification();
                     return res.json();

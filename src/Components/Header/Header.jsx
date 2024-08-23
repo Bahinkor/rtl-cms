@@ -64,7 +64,13 @@ export default function Header() {
             });
     }
 
-    //useEffect
+    // useEffect
+    useEffect(() => {
+        if (window.location.pathname !== "/login") {
+            getUserInfo();
+        }
+    }, []);
+
     useEffect(() => {
         const savedTheme = localStorage.getItem("darkMode");
         if (savedTheme === "true") {
@@ -78,10 +84,6 @@ export default function Header() {
 
     useEffect(() => {
         setDarkMode();
-
-        if (window.location.pathname !== "/login") {
-            getUserInfo();
-        }
     }, [isDarkMode]);
 
     //JSX

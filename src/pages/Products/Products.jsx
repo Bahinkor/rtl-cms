@@ -27,7 +27,7 @@ export default function Products() {
     useEffect(() => {
         // call function
         getAllProducts();
-    }, [])
+    }, []);
 
 
     //JSX

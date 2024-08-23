@@ -52,6 +52,7 @@ export default function Login() {
                     return res.json();
                 } else {
                     errorNotification();
+                    usernameInputRef.current.focus();
                     return false;
                 }
             })
